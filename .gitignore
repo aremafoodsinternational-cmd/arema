@@ -43,15 +43,18 @@ next-env.d.ts
 # Ignore root level assets/docs from chat
 /*.pdf
 /*.docx
-/*.mp4
+/
 /*.png
 /*.jpeg
 /*.jpg
 /frames/
 
-*.mp4
+
 public/videos/palakkad-story.mp4
 
-*.MP4
-public/images/hero-frames/
+
+
 public/videos/palakkad-story.mp4
+
+IMG_6361.MP4
+TensorPix*.mp4
