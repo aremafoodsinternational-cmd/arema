@@ -1,0 +1,666 @@
+.scrollWrapper {
+  position: relative;
+  background-color: var(--light-surface);
+  height: 240vh; /* 240vh scroll height track on desktop for more relaxed transition */
+}
+
+/* ── HERO SECTION & SPLIT LAYOUT ────────────────────── */
+.heroSection {
+  position: sticky; /* CSS Native Pinning, replaces JS scroll pinning */
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: #ECEAE6; /* Solid grayish-sand color */
+}
+
+.splitScreen {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  z-index: 2; /* Sits above the watermark background */
+}
+
+/* Left & Right Panels share 50% width */
+.leftPanel {
+  width: 50vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightPanel {
+  width: 50vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bag Area (relative positioning inside left panel, translates on scroll) */
+.bagArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.bagWrapper {
+  position: relative;
+  z-index: 2;
+  animation: float 6s ease-in-out infinite;
+}
+
+.suspendedImage {
+  height: 510px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 32px rgba(45, 45, 45, 0.08));
+}
+
+.shadow {
+  position: absolute;
+  bottom: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 16px;
+  background: rgba(45, 45, 45, 0.12);
+  filter: blur(8px);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Screen 1: Right-Side Pinned Text (fades out) */
+.titlePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 500px;
+  padding: 0 var(--space-6);
+  width: 100%;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--charcoal);
+  margin-bottom: var(--space-3);
+  transition: color 0.3s ease, transform 0.3s var(--ease-out);
+}
+
+.backLink:hover {
+  color: var(--arema-brown);
+  transform: translateX(-4px);
+}
+
+.category {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--arema-brown);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--dark-text);
+  margin-top: 4px;
+}
+
+.tagline {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--charcoal);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* Scroll prompt indicator */
+.scrollIndicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-3xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--charcoal-60);
+}
+
+.bounceArrow {
+  animation: bounce 2s infinite;
+}
+
+/* Screen 2: Left-Side Description Panel (fades in) */
+.detailPanel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 500px;
+  padding: 0 var(--space-6);
+  width: 100%;
+  z-index: 10;
+  opacity: 0; /* Animated by GSAP on desktop */
+}
+
+.panelTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--dark-text);
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--charcoal);
+  line-height: var(--leading-relaxed);
+}
+
+.subHeading {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--charcoal-60);
+  border-bottom: 1.5px solid var(--pale-sand-40);
+  padding-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.highlightsContainer {
+  margin-top: var(--space-2);
+}
+
+.highlightsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+
+.highlightChip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--dark-text);
+  font-weight: 500;
+}
+
+.checkIcon {
+  color: var(--arema-brown);
+  flex-shrink: 0;
+}
+
+/* ── UNPINNED ADDITIONAL SPECS & CTA SECTION ────── */
+.specsSection {
+  padding: 120px 0;
+  background-color: var(--light-surface);
+  position: relative;
+  z-index: 15;
+}
+
+.container {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  width: calc(100% - 80px); /* 40px margin on each side */
+}
+
+.specsGrid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.specsContainer {
+  width: 100%;
+}
+
+.specsTable {
+  border: 1px solid var(--pale-sand-40);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: white;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--pale-sand-20);
+}
+
+.specRow:last-child {
+  border-bottom: none;
+}
+
+.specRow:nth-child(even) {
+  background: rgba(216, 201, 174, 0.08);
+}
+
+.specLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--charcoal-60);
+  align-self: center;
+}
+
+.specValue {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--dark-text);
+}
+
+/* CTA Enquiry Card */
+.enquiryBlock {
+  padding: var(--space-5);
+  background: var(--pale-sand-20);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--pale-sand-40);
+}
+
+.enquiryTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.enquiryText {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--charcoal);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.enquiryActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.mailLink {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--arema-brown);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.mailLink:hover {
+  color: var(--dark-text);
+}
+
+/* ── RECOMMENDATIONS ─────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--pale-sand-40);
+  margin: 100px 0;
+}
+
+.recHeading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.recGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.recCard {
+  display: flex;
+  flex-direction: column;
+  background: #ECEAE6;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(87, 87, 87, 0.04);
+  padding: var(--space-4);
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.5s var(--ease-out),
+              box-shadow 0.5s var(--ease-out),
+              background-color 0.4s var(--ease-out);
+}
+
+.recCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  background-color: #E6E3DF;
+}
+
+.recImageContainer {
+  position: relative;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: var(--space-1);
+}
+
+.recBagWrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.floatA {
+  animation: float 6s ease-in-out infinite;
+}
+
+.floatB {
+  animation: float 6s ease-in-out infinite 3s;
+}
+
+.recImage {
+  height: 170px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(45, 45, 45, 0.04));
+  transition: transform 0.5s var(--ease-out);
+}
+
+.recCard:hover .recImage {
+  transform: scale(1.04) translateY(-3px);
+}
+
+.recShadow {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 8px;
+  background: rgba(45, 45, 45, 0.12);
+  filter: blur(4px);
+  border-radius: 50%;
+  transition: transform 0.5s var(--ease-out),
+              background-color 0.5s var(--ease-out),
+              filter 0.5s var(--ease-out);
+  z-index: 1;
+}
+
+.recCard:hover .recShadow {
+  transform: translateX(-50%) scale(0.85);
+  background: rgba(45, 45, 45, 0.08);
+  filter: blur(6px);
+}
+
+.recInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recCategory {
+  font-family: var(--font-body);
+  font-size: var(--text-3xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+}
+
+.recCardTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-top: 1px;
+}
+
+.recLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--arema-brown);
+  margin-top: var(--space-2);
+  transition: color 0.3s ease;
+}
+
+.recLink svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.recCard:hover .recLink {
+  color: var(--dark-text);
+}
+
+.recCard:hover .recLink svg {
+  transform: translateX(3px);
+}
+
+/* ── BACKGROUND WATERMARK ───────────────────────────── */
+.bgWatermarkLeft {
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  width: 52%;
+  height: 90%;
+  opacity: 0.09; /* Very subtle watermark on the left behind the bag/text */
+  pointer-events: none;
+  z-index: 1;
+  transform: scaleX(-1) rotate(15deg); /* Mirrored and rotated */
+}
+
+.bgWatermarkRight {
+  position: absolute;
+  bottom: -5%;
+  right: -5%;
+  width: 55%;
+  height: 95%;
+  opacity: 0.12; /* Subtle watermark on the right behind title panel */
+  pointer-events: none;
+  z-index: 1;
+  transform: rotate(-10deg);
+}
+
+.watermarkImage {
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+/* ── ANIMATIONS & KEYFRAMES ──────────────────────────── */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Floating Rice Grains Watermarks */
+.riceGrainWatermark {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1; /* Sits behind text panels and bag area but above background */
+  opacity: 0.15; /* Increased opacity to be visible but still subtle */
+}
+
+.grainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── RESPONSIVE & MOBILE STACK OVERRIDES ─────────────── */
+@media (max-width: 1024px) {
+  .scrollWrapper {
+    height: auto !important; /* disable sticky scroll track height on mobile */
+  }
+
+  .heroSection {
+    position: relative; /* disable sticky on mobile */
+    height: auto;
+    padding: 80px 0;
+    overflow: visible;
+  }
+
+  .bgWatermarkLeft {
+    width: 50%;
+    height: 35%;
+    opacity: 0.04;
+    bottom: 0;
+    left: -5%;
+  }
+
+  .bgWatermarkRight {
+    width: 55%;
+    height: 40%;
+    opacity: 0.05;
+    bottom: 0;
+    right: -5%;
+  }
+
+  .splitScreen {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .leftPanel, .rightPanel {
+    width: 100%;
+    height: auto;
+    padding: 0;
+  }
+
+  /* Display Title first, then Bag, then Description on Mobile */
+  .splitScreen {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rightPanel {
+    order: 1; /* Title */
+    margin-bottom: var(--space-4);
+  }
+
+  .leftPanel {
+    order: 2;
+    flex-direction: column;
+  }
+
+  .bagArea {
+    position: relative;
+    height: 380px;
+    margin-bottom: var(--space-4);
+  }
+
+  .shadow {
+    bottom: 20px;
+  }
+
+  .detailPanel {
+    position: relative;
+    opacity: 1 !important; /* Force visible on mobile */
+    transform: none !important;
+    padding: 0 var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .titlePanel {
+    padding: 0 var(--space-3);
+  }
+
+  .specsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .specsSection {
+    padding: 60px 0;
+  }
+
+  .recGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .bagArea {
+    height: 300px;
+  }
+
+  .suspendedImage {
+    height: 280px;
+  }
+
+  .shadow {
+    width: 140px;
+  }
+
+  .highlightsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .specRow {
+    grid-template-columns: 1.2fr 1fr;
+    padding: 10px 16px;
+  }
+}

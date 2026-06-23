@@ -1,0 +1,291 @@
+/* ══════════════════════════════════════════════════════
+   WHY AREMA — WhyArema.module.css
+   Design direction: Premium editorial, heritage print, high contrast
+   ══════════════════════════════════════════════════════ */
+
+/* ── HERO ───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 80svh;
+  min-height: 550px;
+  overflow: hidden;
+  background: var(--light-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--nav-height);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.heroLabel {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 700;
+  color: var(--dark-text);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.heroTitleEm {
+  display: block;
+  font-style: italic;
+  color: var(--arema-brown);
+}
+
+.heroDesc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--charcoal);
+  line-height: 1.8;
+  max-width: 52ch;
+  margin: 12px auto 0;
+}
+
+/* ── FULL BLEED ACCENT IMAGE ────────────────────────── */
+.heroImageStrip {
+  position: relative;
+  height: 35vh;
+  min-height: 250px;
+  width: 100%;
+}
+
+.heroImageStrip img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── 5 PILLARS — EDITORIAL LIST ─────────────────────── */
+.pillars {
+  padding: 120px 0;
+  background: var(--light-surface);
+}
+
+.pillarsInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 80px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.pillarsSticky {
+  position: sticky;
+  top: 120px;
+}
+
+.pillarsLabel {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.pillarsHeading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  color: var(--dark-text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.pillarsHeadingEm {
+  display: block;
+  font-style: italic;
+  color: var(--arema-brown);
+}
+
+.pillarsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid rgba(139, 90, 60, 0.2);
+}
+
+.pillarItem {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 40px;
+  padding: 60px 0;
+  border-bottom: 1px solid rgba(139, 90, 60, 0.2);
+  align-items: center;
+}
+
+.pillarIndex {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: rgba(139, 90, 60, 0.15);
+  line-height: 1;
+}
+
+.pillarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--dark-text);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.pillarBody {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--charcoal);
+  line-height: 1.8;
+  margin: 0;
+  max-width: 50ch;
+}
+
+/* ── FEATURE SPLIT (IMAGE + TEXT) ───────────────────── */
+.feature {
+  padding: 120px 0;
+  background: var(--dark-text);
+}
+
+.featureInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.featureImageWrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.featureContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.featureTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: var(--light-surface);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.featureTitleEm {
+  font-style: italic;
+  color: var(--arema-brown);
+}
+
+.featureBody {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: rgba(250, 248, 245, 0.65);
+  line-height: 1.8;
+  margin: 0;
+  max-width: 48ch;
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.featureListItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pale-sand);
+}
+
+.featureListDot {
+  width: 6px;
+  height: 6px;
+  background: var(--arema-brown);
+  border-radius: 50%;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .pillarsInner, .featureInner {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  .pillarsInner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .pillarsSticky {
+    position: relative;
+    top: 0;
+  }
+  
+  .featureInner {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  
+  .featureImageWrap {
+    aspect-ratio: 16/9;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroContent, .pillarsInner, .featureInner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .pillarItem {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 40px 0;
+  }
+}

@@ -1,0 +1,281 @@
+.section {
+  position: relative;
+  padding: 64px 0;
+  background-image: url('/images/products-section-bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Subtle overlay to ensure card text stays readable */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 16, 12, 0.25);
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+.container {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  width: calc(100% - 80px); /* 40px margin on each side */
+  position: relative;
+  z-index: 2;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--space-3) auto; /* Compact spacing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pale-sand);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 2.6rem); /* Compact heading font size */
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--light-surface);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--text-xs); /* Slightly smaller text for compaction */
+  line-height: var(--leading-normal);
+  color: rgba(250, 248, 245, 0.75);
+  margin-top: 4px;
+}
+
+/* ── PRODUCT GRID & CARDS ────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4); /* compact gap */
+  margin-bottom: var(--space-4);
+}
+
+/* Borderless card container */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  text-decoration: none;
+  overflow: visible;
+  position: relative;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* Suspended floating animation wrapper */
+.imageContainer {
+  position: relative;
+  height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  margin-bottom: var(--space-2);
+}
+
+/* Radial Spotlight Glow behind each floating bag */
+.spotlight {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(216, 201, 174, 0.14) 0%, rgba(216, 201, 174, 0) 70%);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.6s var(--ease-out), background 0.6s var(--ease-out);
+}
+
+.card:hover .spotlight {
+  transform: translate(-50%, -50%) scale(1.2);
+  background: radial-gradient(circle, rgba(216, 201, 174, 0.22) 0%, rgba(216, 201, 174, 0) 70%);
+}
+
+.bagWrapper {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.card:nth-child(1) .bagWrapper {
+  animation: float 6s ease-in-out infinite;
+}
+
+.card:nth-child(2) .bagWrapper {
+  animation: float 6s ease-in-out infinite 1.8s;
+}
+
+.card:nth-child(3) .bagWrapper {
+  animation: float 6s ease-in-out infinite 3.6s;
+}
+
+.riceBag {
+  height: 390px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 32px rgba(26, 22, 18, 0.22));
+  transition: transform 0.6s var(--ease-out);
+}
+
+.card:hover .riceBag {
+  transform: scale(1.05) translateY(-5px);
+}
+
+/* Soft shadow below floating rice bag */
+.shadow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 8px;
+  background: rgba(26, 22, 18, 0.35);
+  filter: blur(6px);
+  border-radius: 50%;
+  transition: transform 0.6s var(--ease-out),
+              background-color 0.6s var(--ease-out),
+              filter 0.6s var(--ease-out);
+  z-index: 1;
+}
+
+.card:hover .shadow {
+  transform: translateX(-50%) scale(0.75);
+  background: rgba(26, 22, 18, 0.25);
+  filter: blur(8px);
+}
+
+/* Info styling */
+.info {
+  padding: 0 var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardCategory {
+  font-family: var(--font-body);
+  font-size: var(--text-3xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pale-sand);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-base); /* Slightly more compact */
+  font-weight: 600;
+  color: var(--light-surface);
+  margin-top: 2px;
+}
+
+.cardTagline {
+  font-family: var(--font-body);
+  font-size: var(--text-3xs);
+  color: rgba(250, 248, 245, 0.7);
+  line-height: 1.4;
+  margin-bottom: var(--space-1);
+}
+
+.viewDetails {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pale-sand);
+  transition: color 0.3s ease;
+  margin-top: var(--space-1);
+}
+
+.viewDetails svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.card:hover .viewDetails {
+  color: var(--light-surface);
+}
+
+.card:hover .viewDetails svg {
+  transform: translateX(4px);
+}
+
+/* Explore More wrapper */
+.ctaWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-4); /* Compact spacing */
+}
+
+/* ── KEYFRAMES ───────────────────────────────────────── */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px); /* slightly smaller float range for compact size */
+  }
+}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .imageContainer {
+    height: 240px;
+  }
+
+  .riceBag {
+    height: 180px;
+  }
+}

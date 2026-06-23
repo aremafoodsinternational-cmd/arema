@@ -1,0 +1,152 @@
+.section {
+  background: var(--light-surface);
+  padding: 100px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.stalksBg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stalksSvg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  width: calc(100% - 80px); /* 40px margin on each side */
+  position: relative;
+  z-index: 2;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2.2fr 6fr; /* Split alignment matching Our Story/Why Choose */
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* ── LEFT COLUMN ────────────────────────────────────── */
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--dark-text);
+}
+
+/* ── RIGHT ADVANTAGES ────────────────────────────────── */
+.advantages {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-3);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) 0 var(--space-2) var(--space-3);
+  border-left: 1px solid var(--pale-sand);
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  border-left-color: var(--arema-brown);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  color: var(--arema-brown);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .icon {
+  transform: translateY(-2px);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--dark-text);
+}
+
+.desc {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--charcoal);
+}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .advantages {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4) var(--space-3);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .heading {
+    font-size: 1.9rem;
+  }
+
+  .advantages {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .advantages {
+    grid-template-columns: 1fr;
+    gap: var(--space-4) 0;
+  }
+
+  .card {
+    padding-left: var(--space-2);
+  }
+}

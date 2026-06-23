@@ -1,0 +1,106 @@
+/* ============================================================
+   AREMA FOODS INTERNATIONAL — DESIGN TOKENS
+   Strict palette: #D8C9AE | #575757 | #2D2D2D | #FAF8F5 | #8B5A3C
+   ============================================================ */
+
+:root {
+  /* ── COLOR PALETTE ─────────────────────────────────────── */
+  --pale-sand:      #D8C9AE;
+  --charcoal:       #575757;
+  --dark-text:      #2D2D2D;
+  --light-surface:  #FAF8F5;
+  --arema-brown:    #8B5A3C;
+
+  /* Derived tints / shades (still within palette) */
+  --pale-sand-20:   rgba(216, 201, 174, 0.20);
+  --pale-sand-40:   rgba(216, 201, 174, 0.40);
+  --pale-sand-60:   rgba(216, 201, 174, 0.60);
+  --charcoal-30:    rgba(87, 87, 87, 0.30);
+  --charcoal-60:    rgba(87, 87, 87, 0.60);
+  --dark-text-10:   rgba(45, 45, 45, 0.10);
+  --dark-text-50:   rgba(45, 45, 45, 0.50);
+  --arema-brown-20: rgba(139, 90, 60, 0.20);
+  --arema-brown-80: rgba(139, 90, 60, 0.80);
+
+  /* ── GRADIENTS ──────────────────────────────────────────── */
+  --grad-sand-charcoal: linear-gradient(160deg, #D8C9AE 0%, #575757 100%);
+  --grad-sand-brown:    linear-gradient(160deg, #D8C9AE 0%, #8B5A3C 100%);
+  --grad-dark:          linear-gradient(160deg, #575757 0%, #2D2D2D 100%);
+  --grad-surface-sand:  linear-gradient(180deg, #FAF8F5 0%, #D8C9AE 100%);
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────────── */
+  --font-display:   'Cabinet Grotesk', 'Playfair Display', Georgia, serif;
+  --font-body:      'Inter', system-ui, -apple-system, sans-serif;
+
+  --text-3xs:  0.625rem;   /* 10px */
+  --text-2xs:  0.75rem;    /* 12px */
+  --text-xs:   0.8125rem;  /* 13px */
+  --text-sm:   0.9375rem;  /* 15px */
+  --text-base: 1.0625rem;  /* 17px */
+  --text-lg:   1.25rem;    /* 20px */
+  --text-xl:   1.5rem;     /* 24px */
+  --text-2xl:  2rem;       /* 32px */
+  --text-3xl:  2.75rem;    /* 44px */
+  --text-4xl:  3.75rem;    /* 60px */
+  --text-5xl:  5rem;       /* 80px */
+  --text-6xl:  6.5rem;     /* 104px */
+  --text-7xl:  8.5rem;     /* 136px */
+
+  --leading-tight:  1.1;
+  --leading-snug:   1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.7;
+  --leading-loose:  1.9;
+
+  --tracking-tight:  -0.04em;
+  --tracking-snug:   -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.08em;
+  --tracking-widest:  0.18em;
+
+  /* ── SPACING (8px base) ─────────────────────────────────── */
+  --space-1:  0.5rem;    /* 8px  */
+  --space-2:  1rem;      /* 16px */
+  --space-3:  1.5rem;    /* 24px */
+  --space-4:  2rem;      /* 32px */
+  --space-5:  2.5rem;    /* 40px */
+  --space-6:  3rem;      /* 48px */
+  --space-7:  4rem;      /* 64px */
+  --space-8:  5rem;      /* 80px */
+  --space-9:  6.5rem;    /* 104px */
+  --space-10: 8rem;      /* 128px */
+  --space-11: 10rem;     /* 160px */
+  --space-12: 13rem;     /* 208px */
+
+  /* ── BORDER RADIUS ──────────────────────────────────────── */
+  --radius-sm:  12px;
+  --radius-md:  20px;
+  --radius-lg:  28px;
+  --radius-xl:  36px;
+  --radius-full: 9999px;
+
+  /* ── SHADOWS ─────────────────────────────────────────────── */
+  --shadow-xs:  0 1px 4px rgba(45,45,45,0.06);
+  --shadow-sm:  0 2px 12px rgba(45,45,45,0.08), 0 1px 3px rgba(45,45,45,0.05);
+  --shadow-md:  0 8px 32px rgba(45,45,45,0.10), 0 2px 8px rgba(45,45,45,0.06);
+  --shadow-lg:  0 20px 60px rgba(45,45,45,0.12), 0 4px 16px rgba(45,45,45,0.07);
+  --shadow-xl:  0 40px 100px rgba(45,45,45,0.15), 0 8px 24px rgba(45,45,45,0.08);
+  --shadow-brown: 0 12px 40px rgba(139,90,60,0.20);
+
+  /* ── TRANSITIONS ────────────────────────────────────────── */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast:   200ms;
+  --duration-base:   350ms;
+  --duration-slow:   600ms;
+  --duration-slower: 900ms;
+
+  /* ── LAYOUT ──────────────────────────────────────────────── */
+  --container-max: 1440px;
+  --container-wide: 1280px;
+  --container-mid:  1080px;
+  --container-narrow: 760px;
+  --nav-height: 80px;
+}

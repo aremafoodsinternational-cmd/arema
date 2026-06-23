@@ -1,0 +1,242 @@
+.main {
+  position: relative;
+  padding-top: var(--nav-height);
+  background-color: var(--light-surface);
+}
+
+/* ── HERO HEADER ────────────────────────────────────── */
+.hero {
+  padding: var(--space-9) 0;
+  background-color: var(--light-surface);
+  text-align: center;
+}
+
+.heroContent {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--dark-text);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--charcoal);
+  margin-top: var(--space-1);
+}
+
+/* ── MAIN CATALOG GRID SECTION ──────────────────────── */
+.catalogSection {
+  background-color: #ECEAE6; /* Solid grayish-sand color from palette */
+  padding: 100px 0;
+}
+
+.container {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  width: calc(100% - 80px); /* 40px margin on each side */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-7) var(--space-5); /* generous spacing */
+}
+
+/* Borderless catalog item card */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  text-decoration: none;
+  overflow: visible;
+  position: relative;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.imageContainer {
+  position: relative;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  margin-bottom: var(--space-3);
+}
+
+.bagWrapper {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* Stagger float animation delays for 6 items */
+.card:nth-child(6n+1) .bagWrapper { animation: float 6s ease-in-out infinite; }
+.card:nth-child(6n+2) .bagWrapper { animation: float 6s ease-in-out infinite 1s; }
+.card:nth-child(6n+3) .bagWrapper { animation: float 6s ease-in-out infinite 2s; }
+.card:nth-child(6n+4) .bagWrapper { animation: float 6s ease-in-out infinite 3s; }
+.card:nth-child(6n+5) .bagWrapper { animation: float 6s ease-in-out infinite 4s; }
+.card:nth-child(6n+6) .bagWrapper { animation: float 6s ease-in-out infinite 5s; }
+
+.riceBag {
+  height: 270px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(45, 45, 45, 0.04));
+  transition: transform 0.6s var(--ease-out);
+}
+
+.card:hover .riceBag {
+  transform: scale(1.05) translateY(-5px);
+}
+
+/* Soft shadow below floating rice bag */
+.shadow {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 10px;
+  background: rgba(45, 45, 45, 0.12);
+  filter: blur(5px);
+  border-radius: 50%;
+  transition: transform 0.6s var(--ease-out),
+              background-color 0.6s var(--ease-out),
+              filter 0.6s var(--ease-out);
+  z-index: 1;
+}
+
+.card:hover .shadow {
+  transform: translateX(-50%) scale(0.75);
+  background: rgba(45, 45, 45, 0.07);
+  filter: blur(7px);
+}
+
+/* Info styling */
+.info {
+  padding: 0 var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.cardCategory {
+  font-family: var(--font-body);
+  font-size: var(--text-3xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-top: 2px;
+}
+
+.cardTagline {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--charcoal);
+  line-height: 1.5;
+  margin-bottom: var(--space-2);
+}
+
+.viewDetails {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+  transition: color 0.3s ease;
+}
+
+.viewDetails svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.card:hover .viewDetails {
+  color: var(--dark-text);
+}
+
+.card:hover .viewDetails svg {
+  transform: translateX(4px);
+}
+
+/* ── KEYFRAMES ───────────────────────────────────────── */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-7) 0;
+  }
+
+  .catalogSection {
+    padding: 60px 0;
+  }
+
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .imageContainer {
+    height: 280px;
+  }
+
+  .riceBag {
+    height: 220px;
+  }
+}

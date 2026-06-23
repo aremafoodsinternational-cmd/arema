@@ -1,0 +1,208 @@
+.section {
+  background: var(--dark-text); /* Matches dark gray/black background of Section 7 */
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  width: calc(100% - 80px); /* 40px margin on each side */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-8);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(216, 201, 174, 0.65);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--light-surface);
+}
+
+.headerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pale-sand);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.headerLink:hover {
+  color: var(--light-surface);
+}
+
+.arrowCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 201, 174, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.headerLink:hover .arrowCircle {
+  border-color: var(--light-surface);
+  background: rgba(250, 248, 245, 0.08);
+  transform: translateX(4px);
+}
+
+/* ── GRID ──────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(45, 45, 45, 0.3);
+  border: 1px solid rgba(216, 201, 174, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(216, 201, 174, 0.2);
+  transform: translateY(-4px);
+  background: rgba(45, 45, 45, 0.5);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(45, 45, 45, 0.85) 0%, rgba(45, 45, 45, 0.1) 100%);
+  pointer-events: none;
+}
+
+.content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--pale-sand);
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--light-surface);
+  min-height: 2.6em; /* Keeps alignment clean */
+}
+
+.readMore {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(250, 248, 245, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  transition: color 0.3s ease;
+}
+
+.card:hover .readMore {
+  color: var(--pale-sand);
+}
+
+.readMoreArrow {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .readMoreArrow {
+  transform: translateX(4px);
+}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .imageContainer {
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .heading {
+    font-size: 1.9rem;
+  }
+}

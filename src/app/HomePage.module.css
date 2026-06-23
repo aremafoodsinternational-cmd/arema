@@ -1,0 +1,4 @@
+.main {
+  overflow-x: hidden;
+  background: var(--light-surface);
+}

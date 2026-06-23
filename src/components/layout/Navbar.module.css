@@ -1,0 +1,380 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* Let clicks pass through outside the capsule */
+  transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* On home page, transparent background at the top */
+.homeNav {
+  background: transparent;
+}
+
+/* Non-home pages, full-width light background initially */
+.nav:not(.homeNav) {
+  background: rgba(250, 248, 245, 0.96);
+  border-bottom: 1px solid rgba(216, 201, 174, 0.3);
+  pointer-events: auto; /* Allow full-width clicks when unscrolled */
+  height: var(--nav-height);
+  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* When scrolled, the outer container becomes fully transparent and passes pointer events */
+.nav.scrolled {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  height: 90px;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto; /* Capture clicks inside the navbar contents */
+  transition: max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              border 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s ease,
+              margin-top 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              padding-inline 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Liquid Glass Capsule Scrolled Finish */
+.nav.scrolled .inner {
+  width: calc(100% - 64px); /* 32px margin left/right */
+  max-width: 1100px; /* compact centered size */
+  height: 60px; /* sleek scrolled height */
+  border-radius: 9999px; /* pure capsule shape */
+  background: rgba(250, 248, 245, 0.88); /* frosted sand light background */
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1.5px solid rgba(216, 201, 174, 0.55); /* clear sand border */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05); /* soft shadow */
+  margin-top: 15px; /* offset from the top */
+  padding-inline: 28px; /* snugger padding inside capsule */
+}
+
+/* ── WORDMARK & LOGO COLOR DYNAMICS ──────────────── */
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  z-index: 10;
+}
+
+/* Initially invert colors (make it white) on transparent home nav unscrolled */
+.homeNav:not(.scrolled) .logoImg {
+  filter: brightness(0) invert(1) opacity(0.9);
+}
+
+.logoIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  display: block;
+  width: auto;
+  height: 54px;
+  object-fit: contain;
+  transition: filter 0.4s ease, opacity 0.4s ease, height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav.scrolled .logoImg {
+  height: 42px; /* Scale down to fit inside the scrolled capsule */
+}
+
+
+
+/* ── DESKTOP NAVIGATION LINKS ─────────────────────── */
+.desktopLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+  /* Slide-in from right-to-left transition */
+  opacity: 0;
+  transform: translateX(40px);
+  pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desktopLinksVisible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.navContactBtn {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--light-surface);
+  background: var(--arema-brown);
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(139, 90, 60, 0.15);
+}
+
+.navContactBtn:hover {
+  background: var(--dark-text);
+  color: var(--light-surface);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.navLink {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dark-text);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+  padding-block: 6px;
+}
+
+/* Light links when unscrolled on home (fallback just in case, though hidden by opacity) */
+.homeNav:not(.scrolled) .navLink {
+  color: rgba(250, 248, 245, 0.85);
+}
+
+.navLink:hover,
+.activeNavLink {
+  color: var(--arema-brown);
+}
+
+.activeNavLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--arema-brown);
+}
+
+/* ── MOBILE HAMBURGER MENU ────────────────────────── */
+.mobileMenuContainer {
+  display: none; /* Hidden on desktop */
+}
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 6px 0;
+  z-index: 10;
+}
+
+.menuLabel {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dark-text);
+  transition: color 0.3s ease;
+}
+
+/* On transparent home nav, menu label is light */
+.homeNav:not(.scrolled) .menuLabel {
+  color: rgba(250, 248, 245, 0.85);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 24px;
+}
+
+.hamburger span {
+  display: block;
+  height: 1.5px;
+  background: var(--dark-text);
+  border-radius: 2px;
+  transition: all 0.35s ease;
+}
+
+.homeNav:not(.scrolled) .hamburger span {
+  background: rgba(250, 248, 245, 0.85);
+}
+
+/* Open state */
+.menuBtnOpen .hamburger span:nth-child(1) {
+  transform: translateY(3.25px) rotate(45deg);
+}
+.menuBtnOpen .hamburger span:nth-child(2) {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+/* ── FULL-SCREEN OVERLAY (MOBILE DRAWERS) ────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--dark-text);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.overlayOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.overlayInner {
+  padding: calc(var(--nav-height) + var(--space-8)) var(--space-9) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.overlayLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.overlayLinks li {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.overlayOpen .overlayLinks li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.overlayLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(250, 248, 245, 0.5);
+  text-decoration: none;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid rgba(216, 201, 174, 0.08);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.overlayLink:hover,
+.overlayLink.active {
+  color: var(--light-surface);
+  padding-left: var(--space-3);
+}
+
+.overlayNum {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--arema-brown);
+  flex-shrink: 0;
+}
+
+.overlayFooter {
+  margin-top: auto;
+  padding-top: var(--space-8);
+}
+
+.overlayContact {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pale-sand);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(216, 201, 174, 0.3);
+  transition: all 0.3s ease;
+}
+
+.overlayContact:hover {
+  background: var(--arema-brown);
+  border-color: var(--arema-brown);
+}
+
+/* ── RESPONSIVE OVERRIDES ────────────────────────── */
+@media (max-width: 1024px) {
+  .desktopLinks {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktopLinks {
+    display: none; /* Hide direct links on mobile, use hamburger overlay instead */
+  }
+  
+  .mobileMenuContainer {
+    display: block; /* Show menu hamburger */
+  }
+
+  .nav.scrolled .inner {
+    width: calc(100% - 32px); /* 16px margins on phone screens */
+    padding-inline: 18px; /* snugger padding for mobile logo and hamburger */
+    margin-top: 10px; /* closer to the top edge */
+    height: 54px; /* slightly smaller capsule height */
+  }
+
+  .nav.scrolled .logoImg {
+    height: 36px; /* scale down logo to fit mobile capsule */
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    padding-inline: var(--space-4);
+  }
+  .overlayInner {
+    padding-inline: var(--space-5);
+  }
+}

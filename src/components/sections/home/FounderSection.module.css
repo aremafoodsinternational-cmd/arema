@@ -1,0 +1,270 @@
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('/images/story-bg-clean.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── CONTAINER ─────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 40px;
+  padding-block: var(--space-10);
+  display: grid;
+  grid-template-columns: 1fr 2.6fr; /* Increased proportional width for player card */
+  gap: 80px;
+  align-items: flex-start; /* Changed from center to push text higher */
+  position: relative;
+  z-index: 3;
+}
+
+/* ── LEFT COLUMN ───────────────────────────────────── */
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin-top: 60px; /* Pushes it slightly down from the very top, but higher than center */
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--arema-brown);
+  margin-bottom: var(--space-4);
+  position: relative;
+  display: inline-block;
+}
+
+/* Subtle line under eyebrow */
+.eyebrow::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 24px;
+  height: 1.5px;
+  background: var(--arema-brown);
+  opacity: 0.75;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--dark-text);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-5);
+  letter-spacing: -0.02em;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--charcoal);
+  max-width: 380px;
+  font-weight: 400;
+}
+
+/* ── RIGHT COLUMN ──────────────────────────────────── */
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Player Card Wrapper */
+.cardContainer {
+  position: relative;
+  width: 100%;
+  max-width: 960px; /* Enlarged from 800px to make the frame much larger */
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  /* Thick premium border to mimic the mockup framing */
+  border: 8px solid rgba(216, 201, 174, 0.35); /* Sand gold frames border */
+  box-shadow: 0 20px 50px rgba(139, 90, 60, 0.08), 
+              0 4px 12px rgba(0, 0, 0, 0.02);
+  background: var(--light-surface);
+  overflow: visible; /* Let badge overflow bottom edge */
+}
+
+.videoWrapper, .imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px; /* Curves inside the card */
+  overflow: hidden;
+}
+
+.videoWrapper {
+  cursor: pointer;
+}
+
+.mediaVideo, .mediaImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Play button overlay */
+.playBtn {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.4s ease, visibility 0.4s;
+  z-index: 5;
+}
+
+.playBtnHidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.playIconContainer {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(250, 248, 245, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(250, 248, 245, 0.45);
+  color: var(--light-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              background-color 0.3s ease;
+}
+
+.playBtn:hover .playIconContainer {
+  transform: scale(1.08);
+  background: rgba(250, 248, 245, 0.35);
+}
+
+.playIconContainer svg {
+  margin-left: 3px; /* visual alignment of play triangle */
+}
+
+/* Round Badge on Bottom Border */
+.borderBadge {
+  position: absolute;
+  bottom: -30px; /* sit over the bottom card border */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--light-surface);
+  border: 1.5px solid var(--arema-brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(139, 90, 60, 0.12);
+  z-index: 10;
+}
+
+/* Volume Toggle Button */
+.volumeBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(250, 248, 245, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(250, 248, 245, 0.35);
+  color: var(--light-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              background-color 0.3s ease;
+}
+
+.volumeBtn:hover {
+  transform: scale(1.08);
+  background: rgba(250, 248, 245, 0.35);
+}
+
+/* Concept Description Below Video */
+.conceptDescription {
+  margin-top: var(--space-7);
+  text-align: center;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.conceptDescription p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--charcoal);
+  font-weight: 400;
+}
+
+/* ── RESPONSIVE MEDIA QUERIES ───────────────────────── */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-block: var(--space-9);
+  }
+
+  .left {
+    align-items: center;
+    text-align: center;
+    margin-top: 0; /* Reset margin on mobile */
+  }
+
+  .eyebrow::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .description {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+
+  .cardContainer {
+    border-width: 4px; /* Thin out card border on mobile */
+  }
+
+  .borderBadge {
+    width: 38px;
+    height: 38px;
+    bottom: -23px;
+  }
+}
