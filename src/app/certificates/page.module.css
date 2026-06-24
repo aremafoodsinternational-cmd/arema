@@ -1,0 +1,42 @@
+.gallerySection {
+  padding: var(--space-12) 0;
+  background: var(--light-surface);
+  min-height: 50vh;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.414; /* Roughly A4 aspect ratio for documents */
+  background: #f9f9f9;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cardLabel {
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-align: center;
+  background: #fff;
+}

@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/our-story', label: 'Our Story' },
   { href: '/products', label: 'Products' },
   { href: '/why-arema', label: 'Why Arema' },
+  { href: '/certificates', label: 'Certificates' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ];

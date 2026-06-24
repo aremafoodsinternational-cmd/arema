@@ -18,6 +18,9 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = `Website Inquiry: ${formData.inquiry} from ${formData.name}`;
+    const body = `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
+    window.location.href = `mailto:nibeesh.jb@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
   };
 
@@ -61,14 +64,14 @@ export default function ContactPage() {
 
               <div className={styles.infoBlock}>
                 <h3 className={styles.infoTitle}>Contact</h3>
-                <a href="mailto:aremafoodsinternational@gmail.com" className={styles.infoLink}>aremafoodsinternational@gmail.com</a>
+                <a href="mailto:nibeesh.jb@gmail.com" className={styles.infoLink}>nibeesh.jb@gmail.com</a>
                 <a href="tel:+919778339292" className={styles.infoLink}>+91 9778339292</a>
                 <a href="tel:04913589795" className={styles.infoLink}>0491 3589 795</a>
               </div>
 
               <div className={styles.infoBlock}>
                 <h3 className={styles.infoTitle}>Export Inquiries</h3>
-                <a href="mailto:aremafoodsinternational@gmail.com" className={styles.infoLink}>aremafoodsinternational@gmail.com</a>
+                <a href="mailto:nibeesh.jb@gmail.com" className={styles.infoLink}>nibeesh.jb@gmail.com</a>
               </div>
 
               <div className={styles.infoBlock}>
@@ -77,15 +80,17 @@ export default function ContactPage() {
                 <p className="body-sm">9:00 AM – 6:00 PM IST</p>
               </div>
 
-              {/* Map placeholder */}
-              <div className={styles.mapPlaceholder}>
-                <div className={styles.mapInner}>
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                  <span>Palakkad, Kerala</span>
-                </div>
+              {/* Google Map */}
+              <div className={styles.mapPlaceholder} style={{ padding: 0, overflow: 'hidden' }}>
+                <iframe
+                  src="https://maps.google.com/maps?q=GAYATHRI+EXIM+RICE+MILL,+Vadavannur,+po,+Kollengode,+Kerala+678504&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, minHeight: '300px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
               </div>
             </div>
 
