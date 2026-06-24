@@ -39,7 +39,7 @@ create table if not exists blog_translations (
   blog_id text references blogs(id) on delete cascade not null,
   lang text not null,
   category text not null,
-  readTime text not null,
+  "readTime" text not null,
   date text not null,
   title text not null,
   excerpt text not null,
