@@ -205,7 +205,7 @@ export default function ContactPage() {
       {/* ── FULL WIDTH MAP ───────────────────────────── */}
       <section style={{ width: '100%', height: '550px' }}>
         <iframe
-          src="https://maps.google.com/maps?q=Arema+Foods+International,+27/665,+1st+floor,+Das+complex,+Near+Builtech+Pavilion,+NH-47,+Bypass+Kadamkode,+Palakkad,+Kerala&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=10.7605205,76.671108+(Arema+Foods+International)&t=&z=17&ie=UTF8&iwloc=&output=embed"
           width="100%"
           height="100%"
           style={{ border: 0 }}
