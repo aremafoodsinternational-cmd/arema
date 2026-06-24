@@ -5,12 +5,14 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './GlobalReachSection.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 export default function GlobalReachSection() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
@@ -53,15 +55,15 @@ export default function GlobalReachSection() {
         <div className={styles.contentWrapper}>
           {/* Left content (Land / Truck mapping) */}
           <div ref={leftRef} className={styles.left}>
-            <span className={styles.eyebrow}>WHAT WE DO</span>
+            <span className={styles.eyebrow}>{t('globalReach.eyebrow')}</span>
             <h2 className={styles.heading}>
-              From Palakkad<br />to the World.
+              {t('globalReach.heading')}
             </h2>
             <p className={styles.body}>
-              We export the finest certified Palakkad specialty grains, managing the entire supply chain by land, sea, and air to ensure premium quality reaches your table.
+              {t('globalReach.body')}
             </p>
             <Link href="/contact" className={styles.cta}>
-              EXPLORE OUR EXPORT CAPABILITIES
+              {t('globalReach.cta')}
               <span className={styles.arrowCircle}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12" />
@@ -75,19 +77,19 @@ export default function GlobalReachSection() {
         {/* Section Footer for qualities */}
         <div ref={footerRef} className={styles.sectionFooter}>
           <div className={styles.qualityItem}>
-            <span className={styles.qualityLabel}>30+ COUNTRIES</span>
+            <span className={styles.qualityLabel}>{t('globalReach.countries')}</span>
           </div>
           <div className={styles.qualityDivider} />
           <div className={styles.qualityItem}>
-            <span className={styles.qualityLabel}>100% CERTIFIED</span>
+            <span className={styles.qualityLabel}>{t('globalReach.certified')}</span>
           </div>
           <div className={styles.qualityDivider} />
           <div className={styles.qualityItem}>
-            <span className={styles.qualityLabel}>DIRECT SOURCING</span>
+            <span className={styles.qualityLabel}>{t('globalReach.direct')}</span>
           </div>
           <div className={styles.qualityDivider} />
           <div className={styles.qualityItem}>
-            <span className={styles.qualityLabel}>PREMIUM PACKAGING</span>
+            <span className={styles.qualityLabel}>{t('globalReach.packaging')}</span>
           </div>
         </div>
       </div>

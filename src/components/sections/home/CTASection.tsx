@@ -5,12 +5,14 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './CTASection.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 export default function CTASection() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
@@ -73,15 +75,13 @@ export default function CTASection() {
         <div className={styles.grid}>
           {/* Title */}
           <h2 ref={titleRef} className={styles.heading}>
-            Let&apos;s bring authentic<br />
-            products of Palakkad<br />
-            to your market.
+            {t('cta.heading')}
           </h2>
 
           {/* Action Buttons */}
           <div ref={actionsRef} className={styles.actions}>
             <Link href="/contact" className={styles.btnPrimary}>
-              GET IN TOUCH
+              {t('cta.btnPrimary')}
               <span className={styles.btnArrow}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12" />
@@ -90,8 +90,8 @@ export default function CTASection() {
               </span>
             </Link>
 
-            <a href="mailto:aremafoodsinternational@gmail.com" className={styles.btnSecondary}>
-              EMAIL US
+            <a href="mailto:nibeesh.jb@gmail.com" className={styles.btnSecondary}>
+              {t('cta.btnSecondary')}
               <span className={styles.btnArrow}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>

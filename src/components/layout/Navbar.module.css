@@ -385,3 +385,124 @@
     padding-inline: var(--space-5);
   }
 }
+
+.langSelectorContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.globeBtn {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dark-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.globeBtn:hover {
+  background: rgba(139, 90, 60, 0.08);
+  color: var(--arema-brown);
+}
+
+.globeIcon {
+  flex-shrink: 0;
+  transition: transform 0.4s ease;
+}
+
+.globeBtn:hover .globeIcon {
+  transform: rotate(20deg);
+}
+
+/* Light globe when unscrolled on home page */
+.homeNav:not(.scrolled) .globeBtn {
+  color: rgba(250, 248, 245, 0.85);
+}
+.homeNav:not(.scrolled) .globeBtn:hover {
+  background: rgba(250, 248, 245, 0.12);
+  color: #fff;
+}
+
+.langDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  width: 170px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: rgba(250, 248, 245, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(216, 201, 174, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  list-style: none;
+  z-index: 1100;
+  scrollbar-width: thin;
+}
+
+:global([dir="rtl"]) .langDropdown {
+  right: auto;
+  left: 0;
+}
+
+.langOption {
+  width: 100%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--charcoal);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+:global([dir="rtl"]) .langOption {
+  text-align: right;
+  flex-direction: row-reverse;
+}
+
+.langOption:hover {
+  background: rgba(139, 90, 60, 0.08);
+  color: var(--arema-brown);
+}
+
+.langOptionActive {
+  background: var(--arema-brown);
+  color: var(--light-surface) !important;
+}
+
+.langFlag {
+  font-size: 1rem;
+}
+
+.mobileLangSelector {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobileLangSelector {
+    display: inline-block;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+}
+

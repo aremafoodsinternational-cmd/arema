@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Preloader from '@/components/layout/Preloader';
 import SmoothScrollProvider from '@/components/layout/SmoothScrollProvider';
+import { LanguageProvider } from '@/i18n/LanguageContext';
 
 export const metadata: Metadata = {
   title: {
@@ -25,19 +26,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>
-        <Preloader />
-        <div className="grain-overlay" aria-hidden="true" />
-        <Navbar />
-        <SmoothScrollProvider>
-          {children}
-        </SmoothScrollProvider>
-        <Footer />
+        <LanguageProvider>
+          <Preloader />
+          <div className="grain-overlay" aria-hidden="true" />
+          <Navbar />
+          <SmoothScrollProvider>
+            {children}
+          </SmoothScrollProvider>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

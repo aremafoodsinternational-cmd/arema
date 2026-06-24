@@ -6,6 +6,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './ProductsSection.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -36,6 +37,7 @@ const RECOMMENDED_PRODUCTS = [
 ];
 
 export default function ProductsSection() {
+  const { t, currentTranslations } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -87,54 +89,57 @@ export default function ProductsSection() {
       <div className={styles.container}>
         {/* Header Section */}
         <div ref={headerRef} className={styles.header}>
-          <span className={styles.eyebrow}>Our Most Recommended</span>
-          <h2 className={styles.heading}>Heritage Grains. Sourced with Integrity.</h2>
+          <span className={styles.eyebrow}>{t('products.eyebrow')}</span>
+          <h2 className={styles.heading}>{t('products.heading')}</h2>
           <p className={styles.body}>
-            Altogether we offer a full collection of premium products, but these three signature varieties carry the heart of Palakkad to dinner tables around the world.
+            {t('products.body')}
           </p>
         </div>
 
         {/* 3-Column Grid */}
         <div ref={gridRef} className={styles.grid}>
-          {RECOMMENDED_PRODUCTS.map((prod) => (
-            <Link key={prod.id} href={`/products/${prod.id}`} className={styles.card}>
-              <div className={styles.imageContainer}>
-                {/* Radial Spotlight Light Glow */}
-                <div className={styles.spotlight} />
-                {/* Floating Rice Bag */}
-                <div className={styles.bagWrapper}>
-                  <Image
-                    src={prod.image}
-                    alt={prod.name}
-                    width={300}
-                    height={390}
-                    className={styles.riceBag}
-                    priority
-                  />
+          {RECOMMENDED_PRODUCTS.map((prod) => {
+            const locProd = currentTranslations.productsData[prod.id] || prod;
+            return (
+              <Link key={prod.id} href={`/products/${prod.id}`} className={styles.card}>
+                <div className={styles.imageContainer}>
+                  {/* Radial Spotlight Light Glow */}
+                  <div className={styles.spotlight} />
+                  {/* Floating Rice Bag */}
+                  <div className={styles.bagWrapper}>
+                    <Image
+                      src={prod.image}
+                      alt={locProd.name}
+                      width={300}
+                      height={390}
+                      className={styles.riceBag}
+                      priority
+                    />
+                  </div>
+                  {/* Shadow underneath to enhance float effect */}
+                  <div className={styles.shadow} />
                 </div>
-                {/* Shadow underneath to enhance float effect */}
-                <div className={styles.shadow} />
-              </div>
-              <div className={styles.info}>
-                <span className={styles.cardCategory}>{prod.category}</span>
-                <h3 className={styles.cardTitle}>{prod.name}</h3>
-                <p className={styles.cardTagline}>{prod.tagline}</p>
-                <span className={styles.viewDetails}>
-                  View Details
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-          ))}
+                <div className={styles.info}>
+                  <span className={styles.cardCategory}>{locProd.category}</span>
+                  <h3 className={styles.cardTitle}>{locProd.name}</h3>
+                  <p className={styles.cardTagline}>{locProd.tagline}</p>
+                  <span className={styles.viewDetails}>
+                    {t('products.viewDetails')}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Explore More CTA */}
         <div className={styles.ctaWrapper}>
           <Link href="/products" className="btn btn--primary">
-            View More Products
+            {t('products.viewMore')}
           </Link>
         </div>
       </div>

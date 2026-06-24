@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import type { Metadata } from 'next';
+import { useLanguage } from '@/i18n/LanguageContext';
 import styles from './page.module.css';
 
 export default function ContactPage() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -28,19 +29,25 @@ export default function ContactPage() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // Helper to remove asterisk and trim for placeholders
+  const cleanPlaceholder = (str: string) => {
+    return str.replace('*', '').trim();
+  };
+
   return (
     <main style={{ paddingTop: 'var(--nav-height)' }}>
       {/* ── HEADER ───────────────────────────────────── */}
       <section style={{ padding: 'var(--space-12) 0 var(--space-8)', background: 'var(--pale-sand-20)' }}>
         <div className="container">
-          <span className="eyebrow" style={{ display: 'block', marginBottom: 'var(--space-5)' }}>Get in Touch</span>
+          <span className="eyebrow" style={{ display: 'block', marginBottom: 'var(--space-5)' }}>
+            {t('contactPage.heroLabel')}
+          </span>
           <h1 className="display-xl" style={{ color: 'var(--dark-text)', maxWidth: '16ch' }}>
-            Start a<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--arema-brown)' }}>Conversation</em>
+            {t('contactPage.heroTitle')}<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--arema-brown)' }}>{t('contactPage.heroTitleEm')}</em>
           </h1>
           <p className="body-lg" style={{ color: 'var(--charcoal)', maxWidth: '50ch', marginTop: 'var(--space-5)' }}>
-            Whether you are a buyer, distributor, retailer, or a journalist with a question —
-            we would love to hear from you.
+            {t('contactPage.heroDesc')}
           </p>
         </div>
       </section>
@@ -52,7 +59,7 @@ export default function ContactPage() {
             {/* Contact Info */}
             <div className={styles.info}>
               <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Address</h3>
+                <h3 className={styles.infoTitle}>{t('contactPage.address')}</h3>
                 <address style={{ fontStyle: 'normal' }}>
                   <p className="body-base">Arema Foods International</p>
                   <p className="body-sm">27/665, 1st floor, Das complex,</p>
@@ -63,21 +70,21 @@ export default function ContactPage() {
               </div>
 
               <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Contact</h3>
+                <h3 className={styles.infoTitle}>{t('contactPage.contact')}</h3>
                 <a href="mailto:nibeesh.jb@gmail.com" className={styles.infoLink}>nibeesh.jb@gmail.com</a>
                 <a href="tel:+919778339292" className={styles.infoLink}>+91 9778339292</a>
                 <a href="tel:04913589795" className={styles.infoLink}>0491 3589 795</a>
               </div>
 
               <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Export Inquiries</h3>
+                <h3 className={styles.infoTitle}>{t('contactPage.exportInq')}</h3>
                 <a href="mailto:nibeesh.jb@gmail.com" className={styles.infoLink}>nibeesh.jb@gmail.com</a>
               </div>
 
               <div className={styles.infoBlock}>
-                <h3 className={styles.infoTitle}>Business Hours</h3>
-                <p className="body-sm">Monday – Saturday</p>
-                <p className="body-sm">9:00 AM – 6:00 PM IST</p>
+                <h3 className={styles.infoTitle}>{t('contactPage.hoursTitle')}</h3>
+                <p className="body-sm">{t('contactPage.hoursDays')}</p>
+                <p className="body-sm">{t('contactPage.hoursTime')}</p>
               </div>
 
             </div>
@@ -92,69 +99,69 @@ export default function ContactPage() {
                       <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
                   </div>
-                  <h3 className={styles.successTitle}>Message Sent</h3>
-                  <p className={styles.successBody}>Thank you for reaching out. We will respond within 1–2 business days.</p>
+                  <h3 className={styles.successTitle}>{t('contactPage.successTitle')}</h3>
+                  <p className={styles.successBody}>{t('contactPage.successBody')}</p>
                 </div>
               ) : (
                 <form className={styles.form} onSubmit={handleSubmit}>
                   <div className={styles.row}>
                     <div className={styles.field}>
-                      <label htmlFor="name" className={styles.label}>Full Name *</label>
+                      <label htmlFor="name" className={styles.label}>{t('contactPage.formName')}</label>
                       <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className={styles.input}
-                        placeholder="Your name"
+                         id="name"
+                         name="name"
+                         type="text"
+                         required
+                         value={formData.name}
+                         onChange={handleChange}
+                         className={styles.input}
+                         placeholder={cleanPlaceholder(t('contactPage.formName'))}
                       />
                     </div>
                     <div className={styles.field}>
-                      <label htmlFor="company" className={styles.label}>Company</label>
+                      <label htmlFor="company" className={styles.label}>{t('contactPage.formCompany')}</label>
                       <input
-                        id="company"
-                        name="company"
-                        type="text"
-                        value={formData.company}
-                        onChange={handleChange}
-                        className={styles.input}
-                        placeholder="Company name"
+                         id="company"
+                         name="company"
+                         type="text"
+                         value={formData.company}
+                         onChange={handleChange}
+                         className={styles.input}
+                         placeholder={t('contactPage.formCompany')}
                       />
                     </div>
                   </div>
 
                   <div className={styles.row}>
                     <div className={styles.field}>
-                      <label htmlFor="email" className={styles.label}>Email Address *</label>
+                      <label htmlFor="email" className={styles.label}>{t('contactPage.formEmail')}</label>
                       <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={styles.input}
-                        placeholder="your@email.com"
+                         id="email"
+                         name="email"
+                         type="email"
+                         required
+                         value={formData.email}
+                         onChange={handleChange}
+                         className={styles.input}
+                         placeholder={cleanPlaceholder(t('contactPage.formEmail'))}
                       />
                     </div>
                     <div className={styles.field}>
-                      <label htmlFor="phone" className={styles.label}>Phone Number</label>
+                      <label htmlFor="phone" className={styles.label}>{t('contactPage.formPhone')}</label>
                       <input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={styles.input}
-                        placeholder="+1 234 567 8900"
+                         id="phone"
+                         name="phone"
+                         type="tel"
+                         value={formData.phone}
+                         onChange={handleChange}
+                         className={styles.input}
+                         placeholder={t('contactPage.formPhone')}
                       />
                     </div>
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="inquiry" className={styles.label}>Inquiry Type *</label>
+                    <label htmlFor="inquiry" className={styles.label}>{t('contactPage.formInquiryType')}</label>
                     <select
                       id="inquiry"
                       name="inquiry"
@@ -163,17 +170,17 @@ export default function ContactPage() {
                       onChange={handleChange}
                       className={styles.select}
                     >
-                      <option value="wholesale">Wholesale Purchase</option>
-                      <option value="distribution">Distribution Partnership</option>
-                      <option value="private-label">Private Label / OEM</option>
-                      <option value="retail">Retail Enquiry</option>
-                      <option value="media">Media / Press</option>
-                      <option value="other">Other</option>
+                      <option value="wholesale">{t('contactPage.formInquiryWholesale')}</option>
+                      <option value="distribution">{t('contactPage.formInquiryPartner')}</option>
+                      <option value="private-label">{t('contactPage.formInquiryLabel')}</option>
+                      <option value="retail">{t('contactPage.formInquiryRetail')}</option>
+                      <option value="media">{t('contactPage.formInquiryMedia')}</option>
+                      <option value="other">{t('contactPage.formInquiryOther')}</option>
                     </select>
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="message" className={styles.label}>Message *</label>
+                    <label htmlFor="message" className={styles.label}>{t('contactPage.formMessage')}</label>
                     <textarea
                       id="message"
                       name="message"
@@ -182,12 +189,12 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       className={styles.textarea}
-                      placeholder="Tell us about your requirements..."
+                      placeholder={t('contactPage.formMessagePlaceholder')}
                     />
                   </div>
 
                   <button type="submit" className={`btn btn--primary ${styles.submitBtn}`}>
-                    Send Message
+                    {t('contactPage.formSubmit')}
                   </button>
                 </form>
               )}

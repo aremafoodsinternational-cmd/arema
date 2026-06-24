@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './HeroSection.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,6 +41,7 @@ const drawImageProp = (
 };
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const heroRef    = useRef<HTMLElement>(null);
   const canvasRef  = useRef<HTMLCanvasElement>(null);
   const text1Ref   = useRef<HTMLDivElement>(null);
@@ -178,19 +180,19 @@ export default function HeroSection() {
       {/* Scrolling Text Scrubbing Layer */}
       <div className={styles.textScrubContainer}>
         <div ref={text1Ref} className={`${styles.scrubText} ${styles.scrubText1}`}>
-          Every grain carries a story.
+          {t('hero.scrubText1')}
         </div>
         <div ref={text2Ref} className={styles.scrubText}>
-          A story born in the fields of Palakkad.
+          {t('hero.scrubText2')}
         </div>
         <div ref={text3Ref} className={styles.scrubText}>
-          Now reaching tables across the world.
+          {t('hero.scrubText3')}
         </div>
       </div>
 
       {/* Scroll cue */}
       <div className={styles.heroScroll}>
-        <span className={styles.heroScrollText}>SCROLL TO ENTER</span>
+        <span className={styles.heroScrollText}>{t('hero.scrollCue')}</span>
         <div className={styles.heroScrollLine} />
       </div>
     </section>

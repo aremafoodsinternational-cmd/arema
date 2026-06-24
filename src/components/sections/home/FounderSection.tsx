@@ -4,12 +4,14 @@ import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './FounderSection.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 export default function FounderSection() {
+  const { t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true); // Default to muted in JSX for clean initial mount
   const userToggledMuteRef = useRef<boolean | null>(null); // Tracks if the user manually muted/unmuted
@@ -93,10 +95,10 @@ export default function FounderSection() {
       <div className={styles.container}>
         {/* ── LEFT COLUMN ─────────────────────────────────── */}
         <div className={styles.left}>
-          <span className={styles.eyebrow}>OUR STORY</span>
-          <h2 className={styles.heading}>Where It All Began</h2>
+          <span className={styles.eyebrow}>{t('founder.eyebrow')}</span>
+          <h2 className={styles.heading}>{t('founder.heading')}</h2>
           <p className={styles.description}>
-            From the fields of Palakkad to a vision that crossed borders, this is the story behind Arema Foods International.
+            {t('founder.description')}
           </p>
         </div>
 
@@ -166,7 +168,7 @@ export default function FounderSection() {
           {/* Dynamic description below the video */}
           <div className={styles.conceptDescription}>
             <p>
-              Born in the fertile fields of Palakkad, our founder combined agricultural roots with global trade expertise to bridge the gap between traditional Indian farming and international tables. Today, every grain of Arema carries this legacy of authenticity, bringing certified Palakkad Matta rice to families worldwide.
+              {t('founder.conceptDescription')}
             </p>
           </div>
         </div>

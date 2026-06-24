@@ -1,8 +1,11 @@
 'use client';
 
+import { useLanguage } from '@/i18n/LanguageContext';
 import styles from './Blog.module.css';
 
 export default function NewsletterForm() {
+  const { t } = useLanguage();
+
   return (
     <form
       className={styles.newsletterForm}
@@ -11,12 +14,12 @@ export default function NewsletterForm() {
       <input
         id="newsletter-email"
         type="email"
-        placeholder="Your email address"
+        placeholder={t('blogPage.newsletterPlaceholder')}
         className={styles.newsletterInput}
-        aria-label="Email address"
+        aria-label={t('blogPage.newsletterPlaceholder')}
       />
       <button type="submit" className={styles.newsletterBtn}>
-        Subscribe
+        {t('blogPage.newsletterSubmit')}
       </button>
     </form>
   );

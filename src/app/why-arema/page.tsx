@@ -1,37 +1,14 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
 import styles from './WhyArema.module.css';
-
-export const metadata: Metadata = {
-  title: 'Why Choose Arema — Authentic Palakkadan Matta',
-  description: 'Bringing the pure goodness of the Bharathapuzha river to your table. Discover why Arema is the trusted choice for fresh, natural, and authentic Palakkadan Matta.',
-};
-
-const PILLARS = [
-  {
-    title: 'Natural',
-    body: 'Bringing the pure goodness of the Bharathapuzha river to your table, our products are harvested fresh and natural, just as nature intended.',
-  },
-  {
-    title: 'Quality',
-    body: 'We never compromise on quality. Every Arema product is carefully checked to ensure you get only the best.',
-  },
-  {
-    title: 'Healthy',
-    body: 'We offer fresh, healthy, and natural food to support your family\'s well-being and a balanced lifestyle.',
-  },
-  {
-    title: 'Originality',
-    body: 'We believe in authentic flavors. Our products are always fresh and free from any artificial additives.',
-  },
-  {
-    title: 'Trust',
-    body: 'We believe in being honest and transparent. You can trust us to provide safe, genuine, and quality products every time.',
-  },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export default function WhyAremaPage() {
+  const { t, currentTranslations } = useLanguage();
+  const pillars = currentTranslations.whyAremaPage.pillars || [];
+  const featureList = currentTranslations.whyAremaPage.featureList || [];
+
   return (
     <main>
       
@@ -40,14 +17,14 @@ export default function WhyAremaPage() {
       ══════════════════════════════════════════════ */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <span className={styles.heroLabel}>The Arema Difference</span>
+          <span className={styles.heroLabel}>{t('whyAremaPage.heroLabel')}</span>
           <h1 className={styles.heroTitle}>
-            Nothing added.<br />
-            <em className={styles.heroTitleEm}>Nothing compromised.</em>
+            {t('whyAremaPage.heroTitle')}
+            <br />
+            <em className={styles.heroTitleEm}>{t('whyAremaPage.heroTitleEm')}</em>
           </h1>
           <p className={styles.heroDesc}>
-            From the fertile banks of the Bharathapuzha directly to your dining table. 
-            We do not alter what nature perfected; we only preserve it. 
+            {t('whyAremaPage.heroDesc')}
           </p>
         </div>
       </section>
@@ -65,27 +42,28 @@ export default function WhyAremaPage() {
       </div>
 
       {/* ══════════════════════════════════════════════
-          THE 5 PILLARS (From PDF)
+          THE 5 PILLARS
       ══════════════════════════════════════════════ */}
       <section className={styles.pillars}>
         <div className={styles.pillarsInner}>
           {/* Left Column - Sticky Header */}
           <div className={styles.pillarsSticky}>
-            <span className={styles.pillarsLabel}>Our Core Values</span>
+            <span className={styles.pillarsLabel}>{t('whyAremaPage.valuesLabel')}</span>
             <h2 className={styles.pillarsHeading}>
-              Why Choose<br />
-              <em className={styles.pillarsHeadingEm}>Arema.</em>
+              {t('whyAremaPage.valuesHeading')}
+              <br />
+              <em className={styles.pillarsHeadingEm}>{t('whyAremaPage.valuesHeadingEm')}</em>
             </h2>
           </div>
 
           {/* Right Column - Editorial List */}
           <div className={styles.pillarsList}>
-            {PILLARS.map((pillar, index) => (
+            {pillars.map((pillar, index) => (
               <div key={pillar.title} className={styles.pillarItem}>
                 <span className={styles.pillarIndex}>0{index + 1}</span>
                 <div className={styles.pillarContent}>
                   <h3 className={styles.pillarTitle}>{pillar.title}</h3>
-                  <p className={styles.pillarBody}>{pillar.body}</p>
+                  <p className={pillar.body ? styles.pillarBody : styles.pillarDesc}>{pillar.body || (pillar as any).desc}</p>
                 </div>
               </div>
             ))}
@@ -109,16 +87,15 @@ export default function WhyAremaPage() {
           </div>
           <div className={styles.featureContent}>
             <h2 className={styles.featureTitle}>
-              Rooted in<br />
-              <em className={styles.featureTitleEm}>tradition.</em>
+              {t('whyAremaPage.featureTitle')}
+              <br />
+              <em className={styles.featureTitleEm}>{t('whyAremaPage.featureTitleEm')}</em>
             </h2>
             <p className={styles.featureBody}>
-              Every grain of Arema Matta rice is a testament to the centuries-old 
-              agricultural heritage of Palakkad. When you choose Arema, you are 
-              choosing authenticity that you can taste in every bite.
+              {t('whyAremaPage.featureBody')}
             </p>
             <div className={styles.featureList}>
-              {['Sourced from Bharathapuzha Basin', '100% Free of Artificial Additives', 'Rigorous Quality Checks', 'Transparent Supply Chain'].map(item => (
+              {featureList.map(item => (
                 <div key={item} className={styles.featureListItem}>
                   <span className={styles.featureListDot} />
                   {item}

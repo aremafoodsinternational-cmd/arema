@@ -1,14 +1,11 @@
-import type { Metadata } from 'next';
+'use client';
+
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/i18n/LanguageContext';
 import styles from './Blog.module.css';
 import NewsletterForm from './NewsletterForm';
-
-export const metadata: Metadata = {
-  title: 'Field Notes — Arema Foods International',
-  description:
-    'Stories, insights, and perspectives from Arema Foods International — on farming, quality, heritage, and the global food trade.',
-};
 
 /* ── Article Data ──────────────────────────────────────────────── */
 const CATEGORIES = ['All', 'Heritage', 'Farming', 'Quality', 'Trade', 'Process'];
@@ -92,8 +89,52 @@ function ArrowRight({ size = 14 }: { size?: number }) {
 
 /* ── Page ───────────────────────────────────────────────────── */
 export default function BlogPage() {
-  const featured = articles.find((a) => a.featured)!;
-  const rest = articles.filter((a) => !a.featured);
+  const { currentTranslations, t, lang } = useLanguage();
+
+  useEffect(() => {
+    document.title = `${t('blogPage.eyebrow')} — Arema Foods International`;
+  }, [t]);
+
+  const getCategoryTranslation = (cat: string) => {
+    if (cat === 'All') {
+      switch (lang) {
+        case 'ar': return 'الكل';
+        case 'de': return 'Alle';
+        case 'fr': return 'Tout';
+        case 'it': return 'Tutto';
+        case 'nl': return 'Alle';
+        case 'ja': return 'すべて';
+        case 'ko': return '전체';
+        case 'zh': return '全部';
+        case 'ru': return 'Все';
+        case 'hi': return 'सभी';
+        case 'ta': return 'அனைத்தும்';
+        case 'es': return 'Todo';
+        default: return 'All';
+      }
+    }
+    const articleWithCat = articles.find(a => a.category === cat);
+    if (articleWithCat) {
+      const trans = currentTranslations.blogData?.[articleWithCat.id];
+      if (trans) return trans.category;
+    }
+    return cat;
+  };
+
+  const translatedArticles = articles.map((art) => {
+    const trans = currentTranslations.blogData?.[art.id];
+    return {
+      ...art,
+      category: trans?.category || art.category,
+      readTime: trans?.readTime || art.readTime,
+      date: trans?.date || art.date,
+      title: trans?.title || art.title,
+      excerpt: trans?.excerpt || art.excerpt,
+    };
+  });
+
+  const featured = translatedArticles.find((a) => a.featured)!;
+  const rest = translatedArticles.filter((a) => !a.featured);
 
   return (
     <main>
@@ -108,12 +149,12 @@ export default function BlogPage() {
         />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow}>Field Notes</p>
+          <p className={styles.heroEyebrow}>{t('blogPage.eyebrow')}</p>
           <h1 className={styles.heroTitle}>
-            Stories from <em>the&nbsp;Source</em>
+            {t('blogPage.title')}<em>{t('blogPage.titleEm')}</em>
           </h1>
           <div className={styles.heroMeta}>
-            <span className={styles.articleCount}>{articles.length} Articles</span>
+            <span className={styles.articleCount}>{articles.length} {t('blogPage.articlesCount')}</span>
           </div>
         </div>
       </section>
@@ -121,10 +162,10 @@ export default function BlogPage() {
       {/* ── CATEGORY FILTER ──────────────────────────── */}
       <nav className={styles.filterBar} aria-label="Blog categories">
         <div className={styles.filterInner}>
-          <span className={styles.filterLabel}>Filter</span>
+          <span className={styles.filterLabel}>{t('blogPage.filter')}</span>
           {CATEGORIES.map((cat) => (
             <span key={cat} className={`${styles.pill} ${cat === 'All' ? styles.pillActive : ''}`}>
-              {cat}
+              {getCategoryTranslation(cat)}
             </span>
           ))}
         </div>
@@ -133,7 +174,7 @@ export default function BlogPage() {
       {/* ── FEATURED ARTICLE ─────────────────────────── */}
       <section className={styles.featuredSection}>
         <div className={styles.sectionInner}>
-          <p className={styles.sectionLabel}>Featured Story</p>
+          <p className={styles.sectionLabel}>{t('blogPage.featuredLabel')}</p>
           <Link href={`/blog/${featured.id}`} className={styles.featuredCard}>
             {/* Image */}
             <div className={styles.featuredImageWrap}>
@@ -145,7 +186,7 @@ export default function BlogPage() {
                 sizes="(max-width: 768px) 100vw, 55vw"
                 priority
               />
-              <span className={styles.featuredBadge}>Featured</span>
+              <span className={styles.featuredBadge}>{t('blogPage.featuredLabel')}</span>
             </div>
 
             {/* Body */}
@@ -159,7 +200,7 @@ export default function BlogPage() {
               <h2 className={styles.cardTitle}>{featured.title}</h2>
               <p className={styles.cardExcerpt}>{featured.excerpt}</p>
               <span className={styles.readLink}>
-                Read Article <ArrowRight size={14} />
+                {t('blogPage.readArticle')} <ArrowRight size={14} />
               </span>
             </div>
           </Link>
@@ -169,7 +210,7 @@ export default function BlogPage() {
       {/* ── ARTICLE GRID ─────────────────────────────── */}
       <section className={styles.gridSection}>
         <div className={styles.sectionInner}>
-          <p className={styles.sectionLabel}>More Stories</p>
+          <p className={styles.sectionLabel}>{t('blogPage.moreStories')}</p>
           <div className={styles.grid}>
             {rest.map((article) => (
               <Link key={article.id} href={`/blog/${article.id}`} className={styles.articleCard}>
@@ -216,16 +257,15 @@ export default function BlogPage() {
         />
         <div className={styles.newsletterOverlay} />
         <div className={styles.newsletterContent}>
-          <p className={styles.newsletterEyebrow}>Stay Informed</p>
+          <p className={styles.newsletterEyebrow}>{t('blogPage.newsletterEyebrow')}</p>
           <h2 className={styles.newsletterTitle}>
-            Grains, Markets &amp; More — In Your Inbox
+            {t('blogPage.newsletterTitle')}
           </h2>
           <p className={styles.newsletterBody}>
-            Subscribe to Field Notes for monthly dispatches on heritage rice, sustainable farming,
-            and the stories behind Arema&apos;s global reach.
+            {t('blogPage.newsletterBody')}
           </p>
           <NewsletterForm />
-          <p className={styles.privacyNote}>No spam, ever. Unsubscribe anytime.</p>
+          <p className={styles.privacyNote}>{t('blogPage.privacyNote')}</p>
         </div>
       </section>
     </main>

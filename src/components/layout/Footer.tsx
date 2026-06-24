@@ -1,25 +1,29 @@
+'use client';
+
 import Link from 'next/link';
 import styles from './Footer.module.css';
-
-const footerLinks = {
-  pages: [
-    { href: '/', label: 'Home' },
-    { href: '/our-story', label: 'Our Story' },
-    { href: '/products', label: 'Products' },
-    { href: '/why-arema', label: 'Why Arema' },
-    { href: '/blog', label: 'Blog' },
-    { href: '/contact', label: 'Contact' },
-  ],
-  products: [
-    { href: '/products#matta-rice', label: 'Matta Rice' },
-    { href: '/products#white-rice', label: 'White Rice' },
-    { href: '/products#aromatic-rice', label: 'Aromatic Rice' },
-    { href: '/products#value-added', label: 'Value Added Products' },
-  ],
-};
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
+
+  const footerLinks = {
+    pages: [
+      { href: '/', label: t('nav.home') },
+      { href: '/our-story', label: t('nav.ourStory') },
+      { href: '/products', label: t('nav.products') },
+      { href: '/why-arema', label: t('nav.whyArema') },
+      { href: '/blog', label: t('nav.blog') },
+      { href: '/contact', label: t('nav.contact') },
+    ],
+    products: [
+      { href: '/products#matta-rice', label: t('footer.mattaRice') },
+      { href: '/products#white-rice', label: t('footer.whiteRice') },
+      { href: '/products#aromatic-rice', label: t('footer.aromaticRice') },
+      { href: '/products#value-added', label: t('footer.valueAdded') },
+    ],
+  };
 
   return (
     <footer className={styles.footer} role="contentinfo">
@@ -33,8 +37,7 @@ export default function Footer() {
                 <span className={styles.wordmarkSub}>Foods International</span>
               </div>
               <p className={styles.tagline}>
-                From the fertile fields of Palakkad to tables across the world —
-                carrying nature&apos;s finest with honesty and heritage.
+                {t('footer.tagline')}
               </p>
               <div className={styles.socials}>
                 <a href="#" aria-label="LinkedIn" className={styles.social}>
@@ -61,7 +64,7 @@ export default function Footer() {
 
             {/* Pages */}
             <div className={styles.col}>
-              <h4 className={styles.colTitle}>Navigate</h4>
+              <h4 className={styles.colTitle}>{t('footer.navigate')}</h4>
               <ul className={styles.colList} role="list">
                 {footerLinks.pages.map((link) => (
                   <li key={link.href}>
@@ -73,7 +76,7 @@ export default function Footer() {
 
             {/* Products */}
             <div className={styles.col}>
-              <h4 className={styles.colTitle}>Products</h4>
+              <h4 className={styles.colTitle}>{t('footer.products')}</h4>
               <ul className={styles.colList} role="list">
                 {footerLinks.products.map((link) => (
                   <li key={link.href}>
@@ -85,15 +88,15 @@ export default function Footer() {
 
             {/* Contact */}
             <div className={styles.col}>
-              <h4 className={styles.colTitle}>Contact</h4>
+              <h4 className={styles.colTitle}>{t('footer.contact')}</h4>
               <address className={styles.address}>
                 <p>Arema Foods International</p>
                 <p>27/665, 1st floor, Das complex,</p>
                 <p>Near Builtech Pavilion, NH-47,</p>
                 <p>Bypass Kadamkode, Palakkad,</p>
                 <p>Kerala, South India - 678013</p>
-                <a href="mailto:aremafoodsinternational@gmail.com" className={styles.colLink}>
-                  aremafoodsinternational@gmail.com
+                <a href="mailto:nibeesh.jb@gmail.com" className={styles.colLink}>
+                  nibeesh.jb@gmail.com
                 </a>
                 <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
                   <a href="tel:+919778339292" className={styles.colLink}>
@@ -130,12 +133,12 @@ export default function Footer() {
           </div>
           <div className={styles.bottomInner}>
             <p className={styles.copy}>
-              &copy; {year} Arema Foods International. All rights reserved.
+              &copy; {year} {t('footer.rights')}
             </p>
             <div className={styles.legal}>
-              <Link href="/privacy" className={styles.legalLink}>Privacy Policy</Link>
+              <Link href="/privacy" className={styles.legalLink}>{t('footer.privacy')}</Link>
               <span className={styles.dot}>·</span>
-              <Link href="/terms" className={styles.legalLink}>Terms</Link>
+              <Link href="/terms" className={styles.legalLink}>{t('footer.terms')}</Link>
             </div>
           </div>
         </div>

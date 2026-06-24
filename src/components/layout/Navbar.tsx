@@ -1,27 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/our-story', label: 'Our Story' },
-  { href: '/products', label: 'Products' },
-  { href: '/why-arema', label: 'Why Arema' },
-  { href: '/certificates', label: 'Certificates' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
+import { LANGUAGES } from '@/i18n/translations';
 
 export default function Navbar() {
+  const { lang, setLang, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const desktopDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
+  
   const pathname = usePathname();
   const isHome = pathname === '/';
   const showLinks = !isHome || scrolled;
+
+  const navLinks = [
+    { href: '/', label: t('nav.home') },
+    { href: '/our-story', label: t('nav.ourStory') },
+    { href: '/products', label: t('nav.products') },
+    { href: '/why-arema', label: t('nav.whyArema') },
+    { href: '/certificates', label: t('nav.certificates') },
+    { href: '/blog', label: t('nav.blog') },
+    { href: '/contact', label: t('nav.contact') },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -29,8 +36,27 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
-  useEffect(() => { document.body.style.overflow = menuOpen ? 'hidden' : ''; }, [menuOpen]);
+  useEffect(() => { 
+    setMenuOpen(false); 
+    setDropdownOpen(false);
+  }, [pathname]);
+
+  useEffect(() => { 
+    document.body.style.overflow = menuOpen ? 'hidden' : ''; 
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as Node;
+      const clickedDesktop = desktopDropdownRef.current && desktopDropdownRef.current.contains(target);
+      const clickedMobile = mobileDropdownRef.current && mobileDropdownRef.current.contains(target);
+      if (!clickedDesktop && !clickedMobile) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   return (
     <>
@@ -65,17 +91,89 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Desktop Globe Switcher */}
+            <div ref={desktopDropdownRef} className={styles.langSelectorContainer}>
+              <button 
+                className={styles.globeBtn} 
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-label="Select Language"
+                aria-expanded={dropdownOpen}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.globeIcon}>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                <span className={styles.currentLangCode}>{lang.toUpperCase()}</span>
+              </button>
+              
+              {dropdownOpen && (
+                <ul className={styles.langDropdown} data-lenis-prevent>
+                  {LANGUAGES.map((l) => (
+                    <li key={l.code}>
+                      <button 
+                        onClick={() => {
+                          setLang(l.code);
+                          setDropdownOpen(false);
+                        }}
+                        className={`${styles.langOption} ${lang === l.code ? styles.langOptionActive : ''}`}
+                      >
+                        <span className={styles.langFlag}>{l.flag}</span>
+                        <span className={styles.langName}>{l.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
 
           {/* Mobile Hamburg menu button — Visible only on mobile screens */}
           <div className={styles.mobileMenuContainer}>
+            {/* Mobile Language Switcher (Directly on header bar) */}
+            <div ref={mobileDropdownRef} className={`${styles.langSelectorContainer} ${styles.mobileLangSelector}`}>
+              <button 
+                className={styles.globeBtn} 
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-label="Select Language"
+                aria-expanded={dropdownOpen}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.globeIcon}>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                <span className={styles.currentLangCode}>{lang.toUpperCase()}</span>
+              </button>
+              
+              {dropdownOpen && (
+                <ul className={styles.langDropdown} data-lenis-prevent>
+                  {LANGUAGES.map((l) => (
+                    <li key={l.code}>
+                      <button 
+                        onClick={() => {
+                          setLang(l.code);
+                          setDropdownOpen(false);
+                        }}
+                        className={`${styles.langOption} ${lang === l.code ? styles.langOptionActive : ''}`}
+                      >
+                        <span className={styles.langFlag}>{l.flag}</span>
+                        <span className={styles.langName}>{l.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
             <button
               className={`${styles.menuBtn} ${menuOpen ? styles.menuBtnOpen : ''}`}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
             >
-              <span className={styles.menuLabel}>{menuOpen ? 'CLOSE' : 'MENU'}</span>
+              <span className={styles.menuLabel}>{menuOpen ? t('nav.close') : t('nav.menu')}</span>
               <div className={styles.hamburger}>
                 <span />
                 <span />
@@ -102,7 +200,7 @@ export default function Navbar() {
             ))}
           </ul>
           <div className={styles.overlayFooter}>
-            <Link href="/contact" className={styles.overlayContact}>GET IN TOUCH →</Link>
+            <Link href="/contact" className={styles.overlayContact}>{t('nav.getInTouch')} →</Link>
           </div>
         </div>
       </div>

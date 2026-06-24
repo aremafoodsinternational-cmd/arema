@@ -6,6 +6,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './ProductDetailPage.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,8 @@ interface ProductDetailClientProps {
 }
 
 export default function ProductDetailClient({ product, otherProducts }: ProductDetailClientProps) {
+  const { t, currentTranslations } = useLanguage();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const bagAreaRef = useRef<HTMLDivElement>(null);
   const bagRef = useRef<HTMLDivElement>(null);
@@ -63,34 +66,46 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
   const titlePanelRef = useRef<HTMLDivElement>(null);
   const detailPanelRef = useRef<HTMLDivElement>(null);
 
+  // Look up translated version of the active product
+  const locProduct = currentTranslations.productsData[product.id] || product;
+  const mergedProduct = {
+    ...product,
+    ...locProduct,
+    specs: locProduct.specs || product.specs,
+    highlights: locProduct.highlights || product.highlights,
+  };
+
+  // Look up translated versions of the recommended products
+  const mergedOtherProducts = otherProducts.map(p => {
+    const loc = currentTranslations.productsData[p.id] || p;
+    return {
+      ...p,
+      ...loc,
+    };
+  });
+
   useEffect(() => {
-    // Reset scroll to top immediately on mount to prevent scroll restoration from messing up initialization
     window.scrollTo(0, 0);
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Desktop layout Scroll Animation
       mm.add('(min-width: 1025px)', () => {
-        // Timeline for the scroll-bound split-screen transition
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: containerRef.current, // Target scroll wrapper container
+            trigger: containerRef.current,
             start: 'top top',
-            end: () => '+=' + window.innerHeight * 1.0, // Finish animation after 100vh scroll (before unpinning)
-            scrub: 0.3, // Snappy scrub to avoid lagging or glitchy feel
+            end: () => '+=' + window.innerHeight * 1.0,
+            scrub: 0.3,
           },
         });
 
-        // Translate the entire bag area (bag + shadow) from Left Panel to Right Panel
-        // xPercent translates relative to width of bagArea (50vw), moving it exactly to the right panel
         tl.to(bagAreaRef.current, {
           xPercent: 100,
           duration: 0.8,
           ease: 'power1.inOut',
         }, 0);
 
-        // Fade out Title and Category on the Right
         tl.to(titlePanelRef.current, {
           opacity: 0,
           y: -60,
@@ -98,7 +113,6 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
           ease: 'power1.inOut',
         }, 0);
 
-        // Fade in details/description panel on the Left
         tl.fromTo(detailPanelRef.current,
           { opacity: 0, y: 60 },
           {
@@ -107,7 +121,7 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
             duration: 0.6,
             ease: 'power1.inOut',
           },
-          0.3 // fade in description slightly after title starts fading out
+          0.3
         );
       });
     }, containerRef);
@@ -119,7 +133,7 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
     <>
       <div ref={containerRef} className={styles.scrollWrapper}>
       {/* ── PINNED HERO / DETAIL SECTION ──────────────── */}
-      <section className={styles.heroSection} style={{ background: product.gradient }}>
+      <section className={styles.heroSection} style={{ background: mergedProduct.gradient }}>
         {/* Floating Rice Grains Background */}
         {RICE_GRAINS.map((grain) => (
           <div
@@ -171,15 +185,15 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
           <div className={styles.leftPanel}>
             {/* Screen 2: Description & Details (fades in on scroll) */}
             <div ref={detailPanelRef} className={styles.detailPanel}>
-              <span className={styles.category}>{product.category}</span>
-              <h2 className={styles.panelTitle}>{product.name}</h2>
-              <p className={styles.description}>{product.description}</p>
+              <span className={styles.category}>{mergedProduct.category}</span>
+              <h2 className={styles.panelTitle}>{mergedProduct.name}</h2>
+              <p className={styles.description}>{mergedProduct.description}</p>
               
               {/* Highlights Chips */}
               <div className={styles.highlightsContainer}>
-                <h3 className={styles.subHeading}>Key Characteristics</h3>
+                <h3 className={styles.subHeading}>{t('productDetail.keyChars')}</h3>
                 <div className={styles.highlightsGrid}>
-                  {product.highlights.map((highlight, index) => (
+                  {mergedProduct.highlights.map((highlight, index) => (
                     <div key={index} className={styles.highlightChip}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={styles.checkIcon}>
                         <polyline points="20 6 9 17 4 12" />
@@ -195,8 +209,8 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
             <div ref={bagAreaRef} className={styles.bagArea}>
               <div ref={bagRef} className={styles.bagWrapper}>
                 <Image
-                  src={product.image}
-                  alt={product.name}
+                  src={mergedProduct.image}
+                  alt={mergedProduct.name}
                   width={390}
                   height={520}
                   className={styles.suspendedImage}
@@ -216,13 +230,13 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
                   <line x1="19" y1="12" x2="5" y2="12" />
                   <polyline points="12 19 5 12 12 5" />
                 </svg>
-                All products
+                {t('productDetail.allProducts')}
               </Link>
-              <span className={styles.category}>{product.category}</span>
-              <h1 className={styles.title}>{product.name}</h1>
-              <p className={styles.tagline}>{product.tagline}</p>
+              <span className={styles.category}>{mergedProduct.category}</span>
+              <h1 className={styles.title}>{mergedProduct.name}</h1>
+              <p className={styles.tagline}>{mergedProduct.tagline}</p>
               <div className={styles.scrollIndicator}>
-                <span>Scroll down to discover</span>
+                <span>{t('productDetail.scrollDiscover')}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={styles.bounceArrow}>
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <polyline points="19 12 12 19 5 12" />
@@ -240,9 +254,9 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
           <div className={styles.specsGrid}>
             {/* Specifications Card */}
             <div className={styles.specsContainer}>
-              <h3 className={styles.subHeading}>Product Specifications</h3>
+              <h3 className={styles.subHeading}>{t('productDetail.specTitle')}</h3>
               <div className={styles.specsTable}>
-                {product.specs.map((spec, index) => (
+                {mergedProduct.specs.map((spec, index) => (
                   <div key={index} className={styles.specRow}>
                     <div className={styles.specLabel}>{spec.label}</div>
                     <div className={styles.specValue}>{spec.value}</div>
@@ -253,16 +267,16 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
 
             {/* CTA Enquiry Card */}
             <div className={styles.enquiryBlock}>
-              <h4 className={styles.enquiryTitle}>Wholesale & Global Export Enquiries</h4>
+              <h4 className={styles.enquiryTitle}>{t('productDetail.wholesaleTitle')}</h4>
               <p className={styles.enquiryText}>
-                We supply premium grade grains in customizable packaging options for international distributors, supermarkets, and catering chains.
+                {t('productDetail.wholesaleDesc')}
               </p>
               <div className={styles.enquiryActions}>
                 <Link href="/contact" className="btn btn--primary">
-                  Request Wholesale Quote
+                  {t('productDetail.btnEnquiry')}
                 </Link>
-                <a href="mailto:aremafoodsinternational@gmail.com" className={styles.mailLink}>
-                  aremafoodsinternational@gmail.com
+                <a href="mailto:nibeesh.jb@gmail.com" className={styles.mailLink}>
+                  nibeesh.jb@gmail.com
                 </a>
               </div>
             </div>
@@ -273,9 +287,9 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
 
           {/* Recommendations Row */}
           <div className={styles.recommendationsSection}>
-            <h2 className={styles.recHeading}>Explore Other Recommended Varieties</h2>
+            <h2 className={styles.recHeading}>{t('productDetail.exploreOther')}</h2>
             <div className={styles.recGrid}>
-              {otherProducts.map((p, idx) => (
+              {mergedOtherProducts.map((p, idx) => (
                 <Link key={p.id} href={`/products/${p.id}`} className={styles.recCard}>
                   <div className={styles.recImageContainer}>
                     <div className={`${styles.recBagWrapper} ${idx === 0 ? styles.floatA : styles.floatB}`}>
@@ -293,7 +307,7 @@ export default function ProductDetailClient({ product, otherProducts }: ProductD
                     <span className={styles.recCategory}>{p.category}</span>
                     <h3 className={styles.recCardTitle}>{p.name}</h3>
                     <span className={styles.recLink}>
-                      View Specifications
+                      {t('productsPage.viewSpecs')}
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <polyline points="12 5 19 12 12 19" />
