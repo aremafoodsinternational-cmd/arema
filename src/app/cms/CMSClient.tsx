@@ -119,6 +119,15 @@ export default function CMSClient() {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [blogTranslations, setBlogTranslations] = useState<any[]>([]);
   const [imageOverrides, setImageOverrides] = useState<any[]>([]);
+  const [mediaValues, setMediaValues] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const values: Record<string, string> = {};
+    imageOverrides.forEach(o => {
+      values[o.key] = o.url;
+    });
+    setMediaValues(values);
+  }, [imageOverrides]);
 
   // Page Editing Drafts
   const [draftTranslations, setDraftTranslations] = useState<Record<string, string>>({});
@@ -915,7 +924,11 @@ export default function CMSClient() {
                         <div style={{ display: 'flex', gap: '8px' }}>
                           <input
                             type="text"
-                            defaultValue={currentVal}
+                            value={mediaValues[media.mediaKey] || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setMediaValues(prev => ({ ...prev, [media.mediaKey]: val }));
+                            }}
                             onBlur={(e) => handleManualUrlSave(media.mediaKey, e.target.value)}
                             placeholder={media.mediaType === 'text' ? 'Provide phone or value override...' : 'Or paste a public asset link URL directly...'}
                             style={{
