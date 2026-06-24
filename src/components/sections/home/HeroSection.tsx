@@ -15,163 +15,156 @@ const pad = (num: number, size: number) => {
   return s;
 };
 
-const currentFramePath = (index: number) => {
-  return `/images/hero-frames/ezgif-frame-${pad(index + 1, 3)}.jpg`;
-};
+const currentFramePath = (index: number) =>
+  `/images/hero-frames/ezgif-frame-${pad(index + 1, 3)}.jpg`;
 
 const drawImageProp = (
   ctx: CanvasRenderingContext2D,
   img: HTMLImageElement,
-  x = 0,
-  y = 0,
-  w: number,
-  h: number,
-  offsetX = 0.5,
-  offsetY = 0.5
+  x = 0, y = 0, w: number, h: number,
+  offsetX = 0.5, offsetY = 0.5
 ) => {
-  const iw = img.width;
-  const ih = img.height;
+  const iw = img.width, ih = img.height;
   const r = Math.min(w / iw, h / ih);
-  let nw = iw * r;
-  let nh = ih * r;
-  let cx = 0;
-  let cy = 0;
-  let cw = iw;
-  let ch = ih;
+  let nw = iw * r, nh = ih * r;
+  let cx = 0, cy = 0, cw = iw, ch = ih;
   let ar = 1;
-
   if (nw < w) ar = w / nw;
   if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;
-  nw *= ar;
-  nh *= ar;
-
-  cw = iw / (nw / w);
-  ch = ih / (nh / h);
-
-  cx = (iw - cw) * offsetX;
-  cy = (ih - ch) * offsetY;
-
-  if (cx < 0) cx = 0;
-  if (cy < 0) cy = 0;
-  if (cw > iw) cw = iw;
-  if (ch > ih) ch = ih;
-
+  nw *= ar; nh *= ar;
+  cw = iw / (nw / w); ch = ih / (nh / h);
+  cx = (iw - cw) * offsetX; cy = (ih - ch) * offsetY;
+  if (cx < 0) cx = 0; if (cy < 0) cy = 0;
+  if (cw > iw) cw = iw; if (ch > ih) ch = ih;
   ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
 };
 
 export default function HeroSection() {
-  const heroRef = useRef<HTMLElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const text1Ref = useRef<HTMLDivElement>(null);
-  const text2Ref = useRef<HTMLDivElement>(null);
-  const text3Ref = useRef<HTMLDivElement>(null);
+  const heroRef    = useRef<HTMLElement>(null);
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const text1Ref   = useRef<HTMLDivElement>(null);
+  const text2Ref   = useRef<HTMLDivElement>(null);
+  const text3Ref   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Reset scroll to top immediately on mount to prevent scroll restoration from messing up initialization
-    window.scrollTo(0, 0);
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // ── 1. Kill any leftover ScrollTriggers from a previous home visit ──────
+    // This is critical: navigating Home → Other → Home leaves stale instances
+    ScrollTrigger.getAll()
+      .filter(st => st.vars.id === 'hero-trigger')
+      .forEach(st => st.kill());
+
+    // ── 2. Reset scroll position via native API (Lenis may override window.scrollTo) ──
+    // Use a tiny delay so Lenis finishes its current scroll before we override
+    const scrollResetTimer = setTimeout(() => {
+      // Directly set the scroll element (Lenis wraps document.documentElement)
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      // Also tell GSAP about the new scroll position
+      ScrollTrigger.refresh();
+    }, 50);
+
+    // ── 3. Size canvas immediately so it's never blank on first paint ────────
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const images: HTMLImageElement[] = [];
     const loadedIndices = new Set<number>();
     const frameObj = { frame: 0 };
 
-    // Load first frame immediately for instant visual
+    // Draw first frame as soon as possible for instant visual
     const firstImg = new window.Image();
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
+    const drawFirst = () => {
+      canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
-      
-      const currentFrameIndex = Math.round(frameObj.frame);
-      if (loadedIndices.size === TOTAL_FRAMES && images[currentFrameIndex]) {
-        drawImageProp(ctx, images[currentFrameIndex], 0, 0, canvas.width, canvas.height);
-      } else if (firstImg.complete) {
-        drawImageProp(ctx, firstImg, 0, 0, canvas.width, canvas.height);
-      }
-    };
-
-    const handleFirstLoad = () => {
-      resizeCanvas();
       drawImageProp(ctx, firstImg, 0, 0, canvas.width, canvas.height);
     };
-
-    firstImg.onload = handleFirstLoad;
+    firstImg.onload = drawFirst;
     firstImg.src = currentFramePath(0);
-    if (firstImg.complete) handleFirstLoad();
+    if (firstImg.complete && firstImg.naturalWidth > 0) drawFirst();
 
+    // Resize handler
+    const resizeCanvas = () => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const idx = Math.round(frameObj.frame);
+      const src = images[idx] ?? firstImg;
+      if (src && src.complete && src.naturalWidth > 0) {
+        drawImageProp(ctx, src, 0, 0, canvas.width, canvas.height);
+      }
+    };
     window.addEventListener('resize', resizeCanvas);
 
-    // Wrap in gsap.context so everything created inside is automatically cleaned up on revert()
+    // ── 4. Wrap all GSAP work in a context for clean teardown ───────────────
     const gsapCtx = gsap.context(() => {
-      // Preload all remaining frames
       for (let i = 0; i < TOTAL_FRAMES; i++) {
-        const img = new window.Image();
+        const img   = new window.Image();
         const index = i;
-        
+
         const markLoaded = () => {
           if (loadedIndices.has(index)) return;
           loadedIndices.add(index);
-          
+
+          // Once ALL frames are loaded, set up the ScrollTrigger
           if (loadedIndices.size === TOTAL_FRAMES) {
-            const scrollTimeline = gsap.timeline({
-              scrollTrigger: {
-                id: 'hero-trigger',
-                trigger: heroRef.current,
-                start: 'top top',
-                end: '+=150%', // Pinned scroll scrubbing distance
-                pin: true,
-                scrub: true,
-                invalidateOnRefresh: true,
-              },
+            // Small delay so the DOM is fully painted before ScrollTrigger measures heights
+            requestAnimationFrame(() => {
+              const scrollTimeline = gsap.timeline({
+                scrollTrigger: {
+                  id: 'hero-trigger',
+                  trigger: heroRef.current,
+                  start: 'top top',
+                  end: '+=150%',
+                  pin: true,
+                  scrub: true,
+                  invalidateOnRefresh: true,
+                  // Force a fresh measurement on creation
+                  onRefresh: () => ScrollTrigger.refresh(true),
+                },
+              });
+
+              // Scrub canvas frames
+              scrollTimeline.to(frameObj, {
+                frame: TOTAL_FRAMES - 1,
+                ease: 'none',
+                duration: 1,
+                onUpdate: () => {
+                  const imgIdx = Math.round(frameObj.frame);
+                  if (images[imgIdx]) {
+                    drawImageProp(ctx, images[imgIdx], 0, 0, canvas.width, canvas.height);
+                  }
+                },
+              }, 0);
+
+              // Scrub text opacity
+              scrollTimeline.to(text1Ref.current, { opacity: 0, ease: 'power1.inOut', duration: 0.08 }, 0.18);
+              scrollTimeline.to(text2Ref.current, { opacity: 1, ease: 'power1.inOut', duration: 0.08 }, 0.33);
+              scrollTimeline.to(text2Ref.current, { opacity: 0, ease: 'power1.inOut', duration: 0.08 }, 0.58);
+              scrollTimeline.to(text3Ref.current, { opacity: 1, ease: 'power1.inOut', duration: 0.08 }, 0.73);
+              scrollTimeline.to(text3Ref.current, { opacity: 0, ease: 'power1.inOut', duration: 0.08 }, 0.92);
+
+              ScrollTrigger.refresh();
             });
-
-            // 1. Scrub canvas frames from index 0 to 79
-            scrollTimeline.to(frameObj, {
-              frame: TOTAL_FRAMES - 1,
-              ease: 'none',
-              duration: 1,
-              onUpdate: () => {
-                const imgIndex = Math.round(frameObj.frame);
-                if (images[imgIndex]) {
-                  drawImageProp(ctx, images[imgIndex], 0, 0, canvas.width, canvas.height);
-                }
-              },
-            }, 0);
-
-            // 2. Scrub text opacities sequentially
-            // Text 1 starts visible (opacity: 1) and fades out at 0.18 to 0.26
-            scrollTimeline.to(text1Ref.current, { opacity: 0, ease: 'power1.inOut', duration: 0.08 }, 0.18);
-
-            // Text 2 starts invisible (opacity: 0), fades in at 0.33 to 0.41, fades out at 0.58 to 0.66
-            scrollTimeline.to(text2Ref.current, { opacity: 1, ease: 'power1.inOut', duration: 0.08 }, 0.33);
-            scrollTimeline.to(text2Ref.current, { opacity: 0, ease: 'power1.inOut', duration: 0.08 }, 0.58);
-
-            // Text 3 starts invisible (opacity: 0), fades in at 0.73 to 0.81, fades out at 0.92 to 1.0
-            scrollTimeline.to(text3Ref.current, { opacity: 1, ease: 'power1.inOut', duration: 0.08 }, 0.73);
-            scrollTimeline.to(text3Ref.current, { opacity: 0, ease: 'power1.inOut', duration: 0.08 }, 0.92);
-            
-            ScrollTrigger.refresh();
           }
         };
 
-        img.onload = markLoaded;
+        img.onload  = markLoaded;
         img.onerror = markLoaded;
-        img.src = currentFramePath(i);
-        
-        if (img.complete && img.naturalWidth > 0) {
-          markLoaded();
-        }
+        img.src     = currentFramePath(i);
+        if (img.complete && img.naturalWidth > 0) markLoaded();
         images.push(img);
       }
     });
 
+    // ── 5. Cleanup on unmount ───────────────────────────────────────────────
     return () => {
+      clearTimeout(scrollResetTimer);
       window.removeEventListener('resize', resizeCanvas);
-      gsapCtx.revert(); // Reverts and destroys all ScrollTriggers and timelines created in context
+      gsapCtx.revert(); // kills all timelines + ScrollTriggers created above
     };
   }, []);
 
