@@ -140,12 +140,6 @@ async function seed() {
   // ── 2. Seed Products ──────────────────────────────────────────────────────
   console.log("Seeding products...");
   const products = [
-    { id: 'matta-rice', image_url: '/images/product-bag-nobg.png' },
-    { id: 'kuruva-rice', image_url: '/images/product-bag-nobg.png' },
-    { id: 'aromatic-rice', image_url: '/images/product-bag-nobg.png' },
-    { id: 'biryani-rice', image_url: '/images/product-bag-nobg.png' },
-    { id: 'navara-rice', image_url: '/images/product-bag-nobg.png' },
-    { id: 'gandhakasala-rice', image_url: '/images/product-bag-nobg.png' },
     { id: 'jyothi-matta', image_url: '/images/product-bag-nobg.png' },
     { id: 'uma-matta', image_url: '/images/product-bag-nobg.png' },
     { id: 'kanjana-matta', image_url: '/images/product-bag-nobg.png' },

@@ -14,24 +14,24 @@ if (typeof window !== 'undefined') {
 
 const RECOMMENDED_PRODUCTS = [
   {
-    id: 'matta-rice',
-    name: 'Palakkad Matta Rice',
+    id: 'jyothi-matta',
+    name: 'Jyothi Matta Rice',
     category: 'Kerala Heritage',
-    tagline: 'The nutrient-dense red-bran heritage grain.',
+    tagline: 'The Nutrition King - high fiber, red bran, and diabetic-friendly.',
     image: '/images/product-bag-nobg.png',
   },
   {
-    id: 'kuruva-rice',
-    name: 'Premium Kuruva Rice',
+    id: 'ast-white-rice',
+    name: 'AST White Rice',
     category: 'Premium Grade',
-    tagline: 'Plump, double-boiled short grains for daily dining.',
+    tagline: 'Aromatic Premium - natural aroma, quick cooking, and fluffy grains.',
     image: '/images/product-bag-nobg.png',
   },
   {
-    id: 'aromatic-rice',
-    name: 'Jeerakasala Rice',
-    category: 'Aromatic Collection',
-    tagline: 'Naturally fragrant grains perfect for festive cooking.',
+    id: 'puttu-podi',
+    name: 'Premium Puttu Podi',
+    category: 'Value Added Products',
+    tagline: 'Traditional Kerala breakfast in just 5 minutes - just add water.',
     image: '/images/product-bag-nobg.png',
   },
 ];

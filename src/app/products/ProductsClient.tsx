@@ -6,12 +6,6 @@ import styles from './ProductsPage.module.css';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const CATALOG_PRODUCTS = [
-  { id: 'matta-rice', image: '/images/product-bag-nobg.png' },
-  { id: 'kuruva-rice', image: '/images/product-bag-nobg.png' },
-  { id: 'aromatic-rice', image: '/images/product-bag-nobg.png' },
-  { id: 'biryani-rice', image: '/images/product-bag-nobg.png' },
-  { id: 'navara-rice', image: '/images/product-bag-nobg.png' },
-  { id: 'gandhakasala-rice', image: '/images/product-bag-nobg.png' },
   { id: 'jyothi-matta', image: '/images/product-bag-nobg.png' },
   { id: 'uma-matta', image: '/images/product-bag-nobg.png' },
   { id: 'kanjana-matta', image: '/images/product-bag-nobg.png' },
