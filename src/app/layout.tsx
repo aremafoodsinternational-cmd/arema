@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import Preloader from '@/components/layout/Preloader';
 import SmoothScrollProvider from '@/components/layout/SmoothScrollProvider';
 import { LanguageProvider } from '@/i18n/LanguageContext';
+import WhatsAppButton from '@/components/layout/WhatsAppButton';
 
 export const metadata: Metadata = {
   title: {
@@ -39,6 +40,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             {children}
           </SmoothScrollProvider>
+          <WhatsAppButton />
           <Footer />
         </LanguageProvider>
       </body>
