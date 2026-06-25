@@ -14,24 +14,24 @@ if (typeof window !== 'undefined') {
 
 const blogPosts = [
   {
-    id: 'matta-rice-world-stage',
+    id: 'authenticity-of-granary',
     category: 'HERITAGE',
     title: 'The Authenticity of the Granary',
-    img: '/images/blog-images.png',
+    img: '/images/blog-images-v2.png',
     position: '0% 0%',
   },
   {
-    id: 'export-standards',
+    id: 'why-matta-doesnt-taste-like-90s',
     category: 'QUALITY',
     title: "Why doesn't Matta taste like the 90's anymore?",
-    img: '/images/blog-images.png',
+    img: '/images/matta-grain-hands.png',
     position: '50% 0%',
   },
   {
-    id: 'palakkad-farmers',
+    id: 'meet-bharathapuzha-farmers',
     category: 'FARMERS',
     title: 'Bharathapuzha Farmers: Our True Partners',
-    img: '/images/blog-images.png',
+    img: '/images/tl-01.png',
     position: '100% 0%',
   },
 ];

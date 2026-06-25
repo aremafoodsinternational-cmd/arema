@@ -156,7 +156,7 @@ export default function CMSClient() {
   const [isAddingBlog, setIsAddingBlog] = useState(false);
   const [blogDraft, setBlogDraft] = useState({
     id: '',
-    image_url: '/images/blog-images.png',
+    image_url: '/images/blog-images-v2.png',
     category: 'Heritage',
     readTime: '5 min read',
     date: '',
@@ -294,7 +294,7 @@ export default function CMSClient() {
 
     setBlogDraft({
       id: selectedBlogId,
-      image_url: baseBlog?.image_url || '/images/blog-images.png',
+      image_url: baseBlog?.image_url || '/images/blog-images-v2.png',
       category: transBlog?.category || 'Heritage',
       readTime: transBlog?.readTime || '5 min read',
       date: transBlog?.date || '',
@@ -1956,7 +1956,7 @@ export default function CMSClient() {
                     setSelectedBlogId(null);
                     setBlogDraft({
                       id: '',
-                      image_url: '/images/blog-images.png',
+                      image_url: '/images/blog-images-v2.png',
                       category: 'Heritage',
                       readTime: '5 min read',
                       date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
@@ -2291,7 +2291,7 @@ export default function CMSClient() {
                           alt="Cover view"
                           style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                           onError={(e) => {
-                            e.currentTarget.src = '/images/blog-images.png';
+                            e.currentTarget.src = '/images/blog-images-v2.png';
                           }}
                         />
                       </div>

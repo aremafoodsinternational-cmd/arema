@@ -24,7 +24,7 @@ const articles: Record<string, {
     title: 'AREMA : The Authenticity of the Granary',
     excerpt:
       'In our childhood, one of the most significant sights and ways of life in our countryside was the vast paddy fields—spread out like a lush green carpet, the true source of rice and grain.',
-    image: '/images/blog-images.png',
+    image: '/images/blog-images-v2.png',
     author: 'Arema Editorial',
     authorRole: 'Field Notes Team',
     body: [

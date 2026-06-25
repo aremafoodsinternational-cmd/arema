@@ -10,7 +10,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const BLOG_ARTICLES = [
   {
-    base: { id: 'authenticity-of-granary', image_url: '/images/blog-images.png' },
+    base: { id: 'authenticity-of-granary', image_url: '/images/blog-images-v2.png' },
     translation: {
       blog_id: 'authenticity-of-granary',
       lang: 'en',
