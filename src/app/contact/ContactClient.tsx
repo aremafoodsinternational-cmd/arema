@@ -22,16 +22,7 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
 
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8ea06281-a237-4c4f-a286-b99e541433dd';
-    if (!accessKey) {
-      console.warn('Web3Forms Access Key is missing. Using mailto fallback.');
-      const subject = `Website Inquiry: ${formData.inquiry} from ${formData.name}`;
-      const body = `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
-      window.location.href = `mailto:${t('contactPage.email')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      setSubmitted(true);
-      setLoading(false);
-      return;
-    }
+    const accessKey = 'fdc24ee6-002b-4734-9a4c-9cd3b43318ef';
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -48,15 +39,24 @@ export default function ContactPage() {
         })
       });
 
-      const result = await response.json();
-      if (result.success) {
+      const json = await response.json();
+      if (response.status === 200) {
         setSubmitted(true);
+        // Reset form completely
+        setFormData({
+          inquiry: 'wholesale',
+          name: '',
+          company: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
       } else {
-        console.error('Web3Forms Error:', result.message);
+        console.error('Web3Forms Error:', json.message);
         alert('There was an issue submitting your form. Please try again later.');
       }
     } catch (error) {
-      console.error('Submission Error:', error);
+      console.error('Submission failed', error);
       alert('Network error. Please try again later.');
     } finally {
       setLoading(false);
