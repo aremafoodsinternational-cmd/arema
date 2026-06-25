@@ -19,9 +19,6 @@ export default function Preloader() {
     // Skip entirely on CMS routes
     if (pathname?.startsWith('/cms')) return;
 
-    // Guard: only run once
-    if (hasRun.current) return;
-
     // Only show once per session
     const alreadySeen = sessionStorage.getItem('arema-preloader-done');
     if (alreadySeen) {
@@ -29,13 +26,16 @@ export default function Preloader() {
       return;
     }
 
-    hasRun.current = true;
     setActive(true);
-
-    // Lock scroll safely
     document.body.style.overflow = 'hidden';
 
-    // 5 SECOND ANIMATION TIMELINE
+    // Bulletproof failsafe: Always unblock the screen after 6 seconds no matter what happens to GSAP
+    const failsafe = setTimeout(() => {
+      document.body.style.overflow = '';
+      sessionStorage.setItem('arema-preloader-done', '1');
+      setActive(false);
+    }, 6000);
+
     const tl = gsap.timeline({
       onComplete: () => {
         if (!containerRef.current) return;
@@ -49,6 +49,7 @@ export default function Preloader() {
             document.body.style.overflow = '';
             sessionStorage.setItem('arema-preloader-done', '1');
             setActive(false);
+            clearTimeout(failsafe);
           },
         });
       },
@@ -69,10 +70,10 @@ export default function Preloader() {
       tl.to(logoRef.current, { scale: 0.96, opacity: 0, duration: 0.4, ease: 'power2.in' });
     }
 
-    // FAILSAFE: Ensure overflow is ALWAYS restored if component unmounts early
     return () => {
       document.body.style.overflow = '';
       tl.kill();
+      clearTimeout(failsafe);
     };
   }, [pathname]);
 
