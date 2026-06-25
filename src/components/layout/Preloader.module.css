@@ -4,10 +4,15 @@
   width: 100vw;
   height: 100vh;
   background: var(--light-surface); /* #FAF8F5 sand beige */
-  z-index: 99999; /* Higher than header and overlay */
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+.preloaderContainer.hidden {
+  transform: translateY(-100%);
 }
 
 .centerContent {
@@ -18,10 +23,14 @@
 }
 
 .logoWrap {
-  opacity: 0; /* Animated by GSAP */
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.logoWrap.hiding {
+  animation: fadeOut 0.4s ease-in forwards;
 }
 
 .logoImg {
@@ -42,6 +51,22 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 0%; /* Animated by GSAP */
+  width: 0%;
   background: var(--arema-brown); /* Brand brown */
+  animation: fillBar 5s linear forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.96); }
+}
+
+@keyframes fillBar {
+  from { width: 0%; }
+  to { width: 100%; }
 }

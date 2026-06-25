@@ -1,25 +1,18 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import gsap from 'gsap';
 import styles from './Preloader.module.css';
 
 export default function Preloader() {
   const pathname = usePathname();
   const [active, setActive] = useState(false);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const hasRun = useRef(false);
+  const [hiding, setHiding] = useState(false);
 
   useEffect(() => {
-    // Skip entirely on CMS routes
     if (pathname?.startsWith('/cms')) return;
 
-    // Only show once per session
     const alreadySeen = sessionStorage.getItem('arema-preloader-done');
     if (alreadySeen) {
       setActive(false);
@@ -29,60 +22,31 @@ export default function Preloader() {
     setActive(true);
     document.body.style.overflow = 'hidden';
 
-    // Bulletproof failsafe: Always unblock the screen after 6 seconds no matter what happens to GSAP
-    const failsafe = setTimeout(() => {
+    // After 5 seconds, start the hiding animation (logo fades out)
+    const hideTimer = setTimeout(() => {
+      setHiding(true);
+    }, 5000);
+
+    // After 5.8 seconds, physically remove it from the screen and unlock scrolling
+    const removeTimer = setTimeout(() => {
       document.body.style.overflow = '';
       sessionStorage.setItem('arema-preloader-done', '1');
       setActive(false);
-    }, 6000);
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        if (!containerRef.current) return;
-        
-        // Slide up animation at the end
-        gsap.to(containerRef.current, {
-          yPercent: -100,
-          duration: 0.8,
-          ease: 'power3.inOut',
-          onComplete: () => {
-            document.body.style.overflow = '';
-            sessionStorage.setItem('arema-preloader-done', '1');
-            setActive(false);
-            clearTimeout(failsafe);
-          },
-        });
-      },
-    });
-
-    // 1. Fade in logo immediately
-    if (logoRef.current) {
-      tl.to(logoRef.current, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-    }
-    
-    // 2. Fill the progress bar precisely over 5 seconds
-    if (progressRef.current) {
-      tl.to(progressRef.current, { width: '100%', duration: 5.0, ease: 'linear' }, '-=0.2');
-    }
-    
-    // 3. Fade out logo right before it slides up
-    if (logoRef.current) {
-      tl.to(logoRef.current, { scale: 0.96, opacity: 0, duration: 0.4, ease: 'power2.in' });
-    }
+    }, 5800);
 
     return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(removeTimer);
       document.body.style.overflow = '';
-      tl.kill();
-      clearTimeout(failsafe);
     };
   }, [pathname]);
 
   if (!active) return null;
 
   return (
-    <div ref={containerRef} className={styles.preloaderContainer}>
+    <div className={`${styles.preloaderContainer} ${hiding ? styles.hidden : ''}`}>
       <div className={styles.centerContent}>
-        <div ref={logoRef} className={styles.logoWrap}>
+        <div className={`${styles.logoWrap} ${hiding ? styles.hiding : ''}`}>
           <Image
             src="/images/logo.png"
             alt="Arema Foods"
@@ -93,7 +57,7 @@ export default function Preloader() {
           />
         </div>
         <div className={styles.loaderBarContainer}>
-          <div ref={progressRef} className={styles.loaderBarProgress} />
+          <div className={styles.loaderBarProgress} />
         </div>
       </div>
     </div>
