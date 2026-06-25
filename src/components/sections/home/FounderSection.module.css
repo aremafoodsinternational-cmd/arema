@@ -267,4 +267,8 @@
     height: 38px;
     bottom: -23px;
   }
+
+  .conceptDescription {
+    margin-top: var(--space-4);
+  }
 }

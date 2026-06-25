@@ -1,3 +1,54 @@
+.main {
+  padding-top: var(--nav-height);
+  background: var(--light-surface);
+}
+
+.headerSection {
+  padding: var(--space-12) 0 var(--space-8);
+  background: var(--pale-sand-20);
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: var(--space-5);
+}
+
+.title {
+  color: var(--dark-text);
+  max-width: 16ch;
+}
+
+.titleEm {
+  font-style: italic;
+  color: var(--arema-brown);
+}
+
+.description {
+  color: var(--charcoal);
+  max-width: 50ch;
+  margin-top: var(--space-5);
+}
+
+.contentSection {
+  padding: var(--space-10) 0 var(--space-12);
+  background: var(--light-surface);
+}
+
+.phoneGroup {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.phoneDivider {
+  color: var(--charcoal-60);
+}
+
+.mapSection {
+  width: 100%;
+  height: 550px;
+}
+
 .layout {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
@@ -219,5 +270,27 @@
 
   .info {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .headerSection {
+    padding: var(--space-8) 0 var(--space-5);
+  }
+  
+  .eyebrow {
+    margin-bottom: var(--space-3);
+  }
+  
+  .description {
+    margin-top: var(--space-3);
+  }
+
+  .contentSection {
+    padding: var(--space-6) 0 var(--space-8);
+  }
+
+  .mapSection {
+    height: 380px;
   }
 }

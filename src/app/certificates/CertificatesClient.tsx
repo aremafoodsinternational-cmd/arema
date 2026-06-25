@@ -13,18 +13,18 @@ export default function CertificatesPage() {
   }, [t]);
 
   return (
-    <main style={{ paddingTop: 'var(--nav-height)' }}>
+    <main className={styles.main}>
       {/* ── HEADER ───────────────────────────────────── */}
-      <section style={{ padding: 'var(--space-12) 0 var(--space-8)', background: 'var(--pale-sand-20)' }}>
+      <section className={styles.headerSection}>
         <div className="container">
-          <span className="eyebrow" style={{ display: 'block', marginBottom: 'var(--space-5)' }}>
+          <span className={`eyebrow ${styles.eyebrow}`}>
             {t('certsPage.eyebrow')}
           </span>
-          <h1 className="display-xl" style={{ color: 'var(--dark-text)', maxWidth: '16ch' }}>
+          <h1 className={`display-xl ${styles.title}`}>
             {t('certsPage.heading')}<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--arema-brown)' }}>{t('certsPage.headingEm')}</em>
+            <em className={styles.titleEm}>{t('certsPage.headingEm')}</em>
           </h1>
-          <p className="body-lg" style={{ color: 'var(--charcoal)', maxWidth: '60ch', marginTop: 'var(--space-5)' }}>
+          <p className={`body-lg ${styles.description}`}>
             {t('certsPage.desc')}
           </p>
         </div>

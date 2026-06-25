@@ -162,3 +162,14 @@
   height: 100%;
   object-fit: contain;
 }
+
+@media (max-width: 640px) {
+  .scrubText {
+    font-size: 1.45rem;
+    line-height: 1.3;
+    padding-inline: 16px;
+  }
+  .heroScroll {
+    bottom: 30px;
+  }
+}

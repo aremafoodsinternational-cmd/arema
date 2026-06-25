@@ -362,7 +362,9 @@
   }
   
   .mobileMenuContainer {
-    display: block; /* Show menu hamburger */
+    display: flex; /* Show menu elements horizontally */
+    align-items: center;
+    gap: 16px;
   }
 
   .nav.scrolled .inner {

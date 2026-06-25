@@ -598,10 +598,12 @@
 
   .leftPanel {
     order: 2;
+    display: flex;
     flex-direction: column;
   }
 
   .bagArea {
+    order: 1; /* Floating rice bag is shown first in the left panel stack */
     position: relative;
     height: 380px;
     margin-bottom: var(--space-4);
@@ -612,11 +614,16 @@
   }
 
   .detailPanel {
+    order: 2; /* Description follows the rice bag */
     position: relative;
     opacity: 1 !important; /* Force visible on mobile */
     transform: none !important;
     padding: 0 var(--space-3);
     margin-bottom: var(--space-4);
+  }
+
+  .scrollIndicator {
+    display: none; /* Hide desktop scroll indicator on mobile */
   }
 
   .titlePanel {

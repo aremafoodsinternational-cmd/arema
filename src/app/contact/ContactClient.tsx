@@ -72,32 +72,32 @@ export default function ContactPage() {
   };
 
   return (
-    <main style={{ paddingTop: 'var(--nav-height)' }}>
+    <main className={styles.main}>
       {/* ── HEADER ───────────────────────────────────── */}
-      <section style={{ padding: 'var(--space-12) 0 var(--space-8)', background: 'var(--pale-sand-20)' }}>
+      <section className={styles.headerSection}>
         <div className="container">
-          <span className="eyebrow" style={{ display: 'block', marginBottom: 'var(--space-5)' }}>
+          <span className={`eyebrow ${styles.eyebrow}`}>
             {t('contactPage.heroLabel')}
           </span>
-          <h1 className="display-xl" style={{ color: 'var(--dark-text)', maxWidth: '16ch' }}>
+          <h1 className={`display-xl ${styles.title}`}>
             {t('contactPage.heroTitle')}<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--arema-brown)' }}>{t('contactPage.heroTitleEm')}</em>
+            <em className={styles.titleEm}>{t('contactPage.heroTitleEm')}</em>
           </h1>
-          <p className="body-lg" style={{ color: 'var(--charcoal)', maxWidth: '50ch', marginTop: 'var(--space-5)' }}>
+          <p className={`body-lg ${styles.description}`}>
             {t('contactPage.heroDesc')}
           </p>
         </div>
       </section>
 
       {/* ── CONTACT LAYOUT ───────────────────────────── */}
-      <section style={{ padding: 'var(--space-10) 0 var(--space-12)', background: 'var(--light-surface)' }}>
+      <section className={styles.contentSection}>
         <div className="container">
           <div className={styles.layout}>
             {/* Contact Info */}
             <div className={styles.info}>
               <div className={styles.infoBlock}>
                 <h3 className={styles.infoTitle}>{t('contactPage.address')}</h3>
-                <address style={{ fontStyle: 'normal' }}>
+                <address className={styles.address}>
                   <p className="body-base">{t('contactPage.addressName')}</p>
                   <p className="body-sm">{t('contactPage.addressLine1')}</p>
                   <p className="body-sm">{t('contactPage.addressLine2')}</p>
@@ -109,8 +109,11 @@ export default function ContactPage() {
               <div className={styles.infoBlock}>
                 <h3 className={styles.infoTitle}>{t('contactPage.contact')}</h3>
                 <a href={`mailto:${t('contactPage.email')}`} className={styles.infoLink}>{t('contactPage.email')}</a>
-                <a href={`tel:${t('contactPage.phone1')}`} className={styles.infoLink}>{t('contactPage.phone1')}</a>
-                <a href={`tel:${t('contactPage.phone2')}`} className={styles.infoLink}>{t('contactPage.phone2')}</a>
+                <div className={styles.phoneGroup}>
+                  <a href={`tel:${t('contactPage.phone1')}`} className={styles.infoLink}>{t('contactPage.phone1')}</a>
+                  <span className={styles.phoneDivider}>|</span>
+                  <a href={`tel:${t('contactPage.phone2')}`} className={styles.infoLink}>{t('contactPage.phone2')}</a>
+                </div>
               </div>
 
               <div className={styles.infoBlock}>
@@ -241,7 +244,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── FULL WIDTH MAP ───────────────────────────── */}
-      <section style={{ width: '100%', height: '550px' }}>
+      <section className={styles.mapSection}>
         <iframe
           src={t('contactPage.mapEmbedUrl')}
           width="100%"
