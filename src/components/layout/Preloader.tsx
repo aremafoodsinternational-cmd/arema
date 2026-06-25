@@ -8,7 +8,8 @@ import styles from './Preloader.module.css';
 
 export default function Preloader() {
   const pathname = usePathname();
-  const [active, setActive] = useState(false);
+  // TEMPORARILY DISABLED: Returning null to prevent the site from getting stuck
+  return null;
 
   // All hooks MUST be declared before any conditional returns (React rules of hooks)
   const containerRef = useRef<HTMLDivElement>(null);
