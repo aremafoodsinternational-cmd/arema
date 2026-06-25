@@ -101,6 +101,7 @@ export interface TranslationSchema {
     founderBadgeFounded: string;
     founderBadgeCertified: string;
     founderBadgeAPEDA: string;
+    founderEmail?: string;
     stripCap1: string;
     stripCap2: string;
     stripCap3: string;
