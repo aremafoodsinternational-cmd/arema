@@ -63,7 +63,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''} ${isHome ? styles.homeNav : ''}`}>
+      <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''} ${isHome ? styles.homeNav : ''} ${(dropdownOpen || menuOpen) ? styles.navActive : ''}`}>
         <div className={styles.inner}>
           {/* Logo — Always visible on all pages */}
           <Link href="/" className={styles.wordmark}>

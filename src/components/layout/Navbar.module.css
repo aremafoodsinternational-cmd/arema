@@ -12,6 +12,10 @@
               height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.navActive {
+  pointer-events: auto !important;
+}
+
 /* On home page, transparent background at the top */
 .homeNav {
   background: transparent;
@@ -376,6 +380,20 @@
 
   .nav.scrolled .logoImg {
     height: 36px; /* scale down logo to fit mobile capsule */
+  }
+
+  .langDropdown {
+    right: -10px;
+    top: 100%;
+    margin-top: 8px;
+    max-height: 220px; /* Keep it compact on mobile viewports */
+    width: 150px; /* Slightly narrower on mobile */
+    pointer-events: auto !important;
+  }
+
+  :global([dir="rtl"]) .langDropdown {
+    right: auto;
+    left: -10px;
   }
 }
 
