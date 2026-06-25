@@ -40,7 +40,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         { data: imgs }
       ] = await Promise.all([
         supabase.from('site_translations').select('*'),
-        supabase.from('products').select('*'),
+        supabase.from('products').select('*').order('order_index', { ascending: true }),
         supabase.from('product_translations').select('*'),
         supabase.from('blogs').select('*'),
         supabase.from('blog_translations').select('*'),

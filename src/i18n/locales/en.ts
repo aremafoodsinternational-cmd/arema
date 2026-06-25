@@ -276,10 +276,10 @@ export const en: TranslationSchema = {
     addressLine2: 'Near Builtech Pavilion, NH-47,',
     addressLine3: 'Bypass Kadamkode, Palakkad,',
     addressLine4: 'Kerala, South India - 678013',
-    email: 'aremafoodsinternational@gmail.com',
+    email: 'nibeesh.jb@gmail.com',
     phone1: '+91 9778339292',
     phone2: '0491 3589 795',
-    exportEmail: 'aremafoodsinternational@gmail.com',
+    exportEmail: 'nibeesh.jb@gmail.com',
     mapEmbedUrl: 'https://maps.google.com/maps?q=10.7599086,76.6710477+(Arema+Foods+International)&t=&z=17&ie=UTF8&iwloc=&output=embed',
   },
   certsPage: {
