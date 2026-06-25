@@ -280,7 +280,7 @@ export const en: TranslationSchema = {
     phone1: '+91 9778339292',
     phone2: '0491 3589 795',
     exportEmail: 'nibeesh.jb@gmail.com',
-    mapEmbedUrl: 'https://maps.google.com/maps?q=10.7599086,76.6710477+(Arema+Foods+International)&t=&z=17&ie=UTF8&iwloc=&output=embed',
+    mapEmbedUrl: 'https://maps.google.com/maps?q=10.76055,76.67095+(Arema+Foods+International)&t=&z=17&ie=UTF8&iwloc=&output=embed',
   },
   certsPage: {
     eyebrow: 'Our Certifications',
