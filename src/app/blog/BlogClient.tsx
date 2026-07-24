@@ -18,7 +18,7 @@ const articles = [
     title: 'AREMA : The Authenticity of the Granary',
     excerpt:
       'In our childhood, one of the most significant sights and ways of life in our countryside was the vast paddy fields—spread out like a lush green carpet, the true source of rice and grain.',
-    image: '/images/blog-images-v2.png',
+    image: '/images/red-rice.webp',
     featured: true,
   },
   {
@@ -40,7 +40,7 @@ const articles = [
     title: 'Why doesn’t Matta taste like the 90’s anymore ? and how we brought it back?',
     excerpt:
       '“Pazhaya aa taste ippo kittunnilla.” If you’ve heard your parents say this, or caught yourself thinking it after a bland sadhya outside Kerala, you’re not imagining things. The Palakkadan Matta of the 90s has quietly vanished.',
-    image: '/images/matta-grain-hands.png',
+    image: '/images/red-rice.webp',
     featured: false,
   },
   {
@@ -109,7 +109,7 @@ export default function BlogPage() {
           ? base.image
           : (b.image_url && (b.image_url.startsWith('http') || b.image_url.startsWith('/images/')))
             ? b.image_url
-            : '/images/blog-images-v2.png';
+            : '/images/red-rice.webp';
         return {
           ...base,
           id: b.id,

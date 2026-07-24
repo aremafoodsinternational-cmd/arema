@@ -17,14 +17,14 @@ const blogPosts = [
     id: 'authenticity-of-granary',
     category: 'HERITAGE',
     title: 'The Authenticity of the Granary',
-    img: '/images/blog-images-v2.png',
+    img: '/images/red-rice.webp',
     position: '0% 0%',
   },
   {
     id: 'why-matta-doesnt-taste-like-90s',
     category: 'QUALITY',
     title: "Why doesn't Matta taste like the 90's anymore?",
-    img: '/images/matta-grain-hands.png',
+    img: '/images/red-rice.webp',
     position: '50% 0%',
   },
   {
