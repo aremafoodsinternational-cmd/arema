@@ -555,7 +555,7 @@
     position: relative; /* disable sticky on mobile */
     height: auto;
     padding: 130px 0 60px; /* Increased top padding to clear the 90px+ sticky navbar */
-    overflow: visible;
+    overflow: hidden; /* Fix white space on right by preventing watermarks from expanding viewport */
   }
 
   .bgWatermarkLeft {
@@ -583,6 +583,13 @@
     width: 100%;
     height: auto;
     padding: 0;
+  }
+
+  /* Hide duplicate text in titlePanel on mobile, leaving only the backLink */
+  .titlePanel .category,
+  .titlePanel .title,
+  .titlePanel .tagline {
+    display: none;
   }
 
   /* Display Title first, then Bag, then Description on Mobile */
