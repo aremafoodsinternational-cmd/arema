@@ -554,7 +554,7 @@
   .heroSection {
     position: relative; /* disable sticky on mobile */
     height: auto;
-    padding: 80px 0;
+    padding: 130px 0 60px; /* Increased top padding to clear the 90px+ sticky navbar */
     overflow: visible;
   }
 
