@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { supabase } from '@/lib/supabase';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aremafoodsinternational.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aremaexports.com';
 
   // 1. Static pages
   const staticRoutes = [
