@@ -14,6 +14,15 @@ export const metadata: Metadata = {
   },
   description: 'Arema Foods International exports the finest rice from the fertile fields of Palakkad, Kerala to global markets. Heritage grains, international standards.',
   keywords: ['Kerala rice export', 'Palakkad Matta rice', 'premium rice', 'India food export', 'Arema Foods'],
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     siteName: 'Arema Foods International',
     type: 'website',
